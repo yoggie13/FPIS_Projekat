@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FPIS_Projekat.Migrations
 {
     [DbContext(typeof(ISContext))]
-    [Migration("20210613135712_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210613234733_InititalCreate")]
+    partial class InititalCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -89,7 +89,7 @@ namespace FPIS_Projekat.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Employee");
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("FPIS_Projekat.Models.Manufacturer", b =>
@@ -139,22 +139,22 @@ namespace FPIS_Projekat.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("DeviceID")
+                        .HasColumnType("int");
+
                     b.Property<int>("OfferID")
                         .HasColumnType("int");
 
                     b.Property<int>("TariffPackageID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("_DeviceID")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
+
+                    b.HasIndex("DeviceID");
 
                     b.HasIndex("OfferID");
 
                     b.HasIndex("TariffPackageID");
-
-                    b.HasIndex("_DeviceID");
 
                     b.ToTable("OfferItems");
                 });
@@ -220,13 +220,13 @@ namespace FPIS_Projekat.Migrations
             modelBuilder.Entity("FPIS_Projekat.Models.Offer", b =>
                 {
                     b.HasOne("FPIS_Projekat.Models.Client", "_Client")
-                        .WithMany()
+                        .WithMany("OffersReceived")
                         .HasForeignKey("ClientID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FPIS_Projekat.Models.Employee", "_Employee")
-                        .WithMany()
+                        .WithMany("OffersMade")
                         .HasForeignKey("EmployeeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -238,6 +238,10 @@ namespace FPIS_Projekat.Migrations
 
             modelBuilder.Entity("FPIS_Projekat.Models.OfferItem", b =>
                 {
+                    b.HasOne("FPIS_Projekat.Models.Device", "_Device")
+                        .WithMany()
+                        .HasForeignKey("DeviceID");
+
                     b.HasOne("FPIS_Projekat.Models.Offer", "_Offer")
                         .WithMany("OfferItems")
                         .HasForeignKey("OfferID")
@@ -249,10 +253,6 @@ namespace FPIS_Projekat.Migrations
                         .HasForeignKey("TariffPackageID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("FPIS_Projekat.Models.Device", "_Device")
-                        .WithMany()
-                        .HasForeignKey("_DeviceID");
 
                     b.Navigation("_Device");
 
@@ -268,6 +268,16 @@ namespace FPIS_Projekat.Migrations
                         .HasForeignKey("PackageTypeID");
 
                     b.Navigation("_PackageType");
+                });
+
+            modelBuilder.Entity("FPIS_Projekat.Models.Client", b =>
+                {
+                    b.Navigation("OffersReceived");
+                });
+
+            modelBuilder.Entity("FPIS_Projekat.Models.Employee", b =>
+                {
+                    b.Navigation("OffersMade");
                 });
 
             modelBuilder.Entity("FPIS_Projekat.Models.Offer", b =>

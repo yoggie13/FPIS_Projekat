@@ -16,6 +16,7 @@ namespace FPIS_Projekat.Data
         }
         public ISContext() { }
         public DbSet<Client> Clients { get; set; }
+        public DbSet<Employee> Employees { get; set; }
         public DbSet<Device> Devices { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Offer> Offers { get; set; }
@@ -34,6 +35,19 @@ namespace FPIS_Projekat.Data
             modelBuilder.Entity<OfferItem>()
                 .HasOne(o => o._Offer)
                 .WithMany(of => of.OfferItems);
+
+            modelBuilder.Entity<OfferItem>()
+                .HasOne(o => o._TariffPackage);
+
+            modelBuilder.Entity<Offer>()
+                .HasOne(o => o._Client)
+                .WithMany(c => c.OffersReceived);
+
+            modelBuilder.Entity<Offer>()
+               .HasOne(o => o._Employee)
+               .WithMany(e => e.OffersMade);
+
+           
 
         }
     }

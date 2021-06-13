@@ -15,6 +15,7 @@ namespace FPIS_Projekat.Models
         [ForeignKey("OfferID")]
         [Required]
         public Offer _Offer { get; set; }
+        [ForeignKey("DeviceID")]
         public Device _Device { get; set; }
         [Required]
         [ForeignKey("TariffPackageID")]

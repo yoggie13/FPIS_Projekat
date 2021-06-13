@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FPIS_Projekat.Data;
 using FPIS_Projekat.Models;
+using Microsoft.Extensions.Primitives;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Globalization;
 
 namespace FPIS_Projekat.Controllers
 {
@@ -46,7 +49,47 @@ namespace FPIS_Projekat.Controllers
         // GET: Offers/Create
         public IActionResult Create()
         {
+
+            ViewBag.Employees = new List<Employee>(
+                _context.Employees
+                .Select(e => new Employee()
+                {
+                    ID = e.ID,
+                    Name = e.Name
+                })
+               .ToList());
+
+            ViewBag.Clients = new List<Client>(
+                _context.Employees
+                .Select(c => new Client()
+                {
+                    ID = c.ID,
+                    Name = c.Name
+                })
+               .ToList());
+
+            ViewBag.Devices = new List<Device>(
+               _context.Devices
+               .Include(d => d._Manufacturer)
+               .Select(d => new Device()
+               {
+                   ID = d.ID,
+                   Name = d.Name,
+                   _Manufacturer = d._Manufacturer
+               })
+               .ToList());
+
+            ViewBag.Packages = new List<TariffPackage>(
+              _context.TariffPackages
+              .Select(t => new TariffPackage()
+              {
+                  ID = t.ID,
+                  Name = t.Name
+              })
+              .ToList());
+
             return View();
+
         }
 
         // POST: Offers/Create
@@ -56,12 +99,45 @@ namespace FPIS_Projekat.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Date")] Offer offer)
         {
-            if (ModelState.IsValid)
+
+            Employee e = new Employee()
             {
-                _context.Add(offer);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+                ID = Convert.ToInt32(this.Request.Form["_Employee.Name"].ToArray()[0])
+            };
+            offer._Employee = e;
+
+            offer._Client = new Client()
+            {
+                ID = Convert.ToInt32(this.Request.Form["_Client.Name"].ToArray()[0])
+            };
+            offer.OfferItems = new List<OfferItem>()
+            {
+                new OfferItem()
+                {
+                    _Offer = offer,
+                    _Device = new Device()
+                    {
+                        ID = Convert.ToInt32(this.Request.Form["OfferItems[0]._Device.Name"].ToArray()[0])
+                    },
+                    _TariffPackage = new TariffPackage()
+                    {
+                        ID = Convert.ToInt32(this.Request.Form["OfferItems[0]._TariffPackage.Name"].ToArray()[0])
+                    }
+                }
+            };
+
+            //int? id = _context.Offers.Max(o => (int? )o.ID);
+
+            //if (id == null)
+            //    id = 0;
+
+            //offer.ID = (int)id + 1;
+
+            _context.Add(offer);
+            //_context.Add(offer.OfferItems);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
             return View(offer);
         }
 
@@ -149,5 +225,6 @@ namespace FPIS_Projekat.Controllers
         {
             return _context.Offers.Any(e => e.ID == id);
         }
+
     }
 }

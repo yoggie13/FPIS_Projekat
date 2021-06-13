@@ -13,9 +13,23 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
+
+                <label asp-for="_Employee.Name" class="control-label"></label>
+                <select asp-for="_Employee.Name" class="form-control" asp-items="@(new SelectList(ViewBag.Employees, "ID", "Name"))"></select>
+
+                <label asp-for="_Client.Name" class="control-label"></label>
+                <select asp-for="_Client.Name" class="form-control" asp-items="@(new SelectList(ViewBag.Clients, "ID", "Name"))"></select>
+
+                <label asp-for="Date" class="control-label">Datum</label>
                 <input asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
+
+                <span id="offer_items">
+                    <label asp-for="OfferItems[0]._Device.Name" class="control-label"></label>
+                    <select asp-for="OfferItems[0]._Device.Name" class="form-control" asp-items="@(new SelectList(ViewBag.Devices, "ID", "Name"))"></select>
+                    <label asp-for="OfferItems[0]._TariffPackage.Name" class="control-label"></label>
+                    <select asp-for="OfferItems[0]._TariffPackage.Name" class="form-control" asp-items="@(new SelectList(ViewBag.Packages, "ID", "Name"))"></select>
+                </span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

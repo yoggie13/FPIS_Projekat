@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FPIS_Projekat.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InititalCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,7 +23,7 @@ namespace FPIS_Projekat.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Employee",
+                name: "Employees",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
@@ -34,7 +34,7 @@ namespace FPIS_Projekat.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employee", x => x.ID);
+                    table.PrimaryKey("PK_Employees", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -83,9 +83,9 @@ namespace FPIS_Projekat.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Offers_Employee_EmployeeID",
+                        name: "FK_Offers_Employees_EmployeeID",
                         column: x => x.EmployeeID,
-                        principalTable: "Employee",
+                        principalTable: "Employees",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -144,15 +144,15 @@ namespace FPIS_Projekat.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OfferID = table.Column<int>(type: "int", nullable: false),
-                    _DeviceID = table.Column<int>(type: "int", nullable: true),
+                    DeviceID = table.Column<int>(type: "int", nullable: true),
                     TariffPackageID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OfferItems", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_OfferItems_Devices__DeviceID",
-                        column: x => x._DeviceID,
+                        name: "FK_OfferItems_Devices_DeviceID",
+                        column: x => x.DeviceID,
                         principalTable: "Devices",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
@@ -176,9 +176,9 @@ namespace FPIS_Projekat.Migrations
                 column: "ManufacturerID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OfferItems__DeviceID",
+                name: "IX_OfferItems_DeviceID",
                 table: "OfferItems",
-                column: "_DeviceID");
+                column: "DeviceID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OfferItems_OfferID",
@@ -227,7 +227,7 @@ namespace FPIS_Projekat.Migrations
                 name: "Clients");
 
             migrationBuilder.DropTable(
-                name: "Employee");
+                name: "Employees");
 
             migrationBuilder.DropTable(
                 name: "PackageTypes");

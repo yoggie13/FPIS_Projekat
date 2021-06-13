@@ -11,6 +11,7 @@ namespace FPIS_Projekat.Models
     {
         [Key]
         public int ID { get; set; }
+        [Display(Name = "Naziv paketa")]
         public string Name { get; set; }
         public int NumberOfMinutes { get; set; }
         public int NumberOfMessages { get; set; }
@@ -18,5 +19,10 @@ namespace FPIS_Projekat.Models
         public double Price { get; set; }
         [ForeignKey("PackageTypeID")]
         public PackageType _PackageType { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

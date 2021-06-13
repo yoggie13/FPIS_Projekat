@@ -11,6 +11,7 @@ namespace FPIS_Projekat.Models
     {
         [Key]
         public int ID { get; set; }
+        [Display(Name = "Naziv uređaja")]
         public string Name { get; set; }
         public string Model { get; set; }
         public string Color { get; set; }
@@ -18,5 +19,10 @@ namespace FPIS_Projekat.Models
         [ForeignKey("ManufacturerID")]
         [Required]
         public Manufacturer _Manufacturer { get; set; }
+
+        public override string ToString()
+        {
+            return Name + " - " + _Manufacturer.Name;
+        }
     }
 }

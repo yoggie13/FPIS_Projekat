@@ -10,9 +10,15 @@ namespace FPIS_Projekat.Models
     {
         [Key]
         public int ID { get; set; }
+        [Display(Name = "Ime klijenta")]
         public string Name { get; set; }
         public string Email { get; set; }
         public string Telephone { get; set; }
-        List<Offer> OffersReceived { get; set; }
+        public List<Offer> OffersReceived { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
