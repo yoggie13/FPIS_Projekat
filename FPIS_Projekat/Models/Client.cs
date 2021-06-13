@@ -13,5 +13,6 @@ namespace FPIS_Projekat.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public string Telephone { get; set; }
+        List<Offer> OffersReceived { get; set; }
     }
 }

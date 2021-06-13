@@ -50,6 +50,9 @@ namespace FPIS_Projekat.Migrations
                     b.Property<string>("Color")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ManufacturerID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
 
@@ -60,6 +63,8 @@ namespace FPIS_Projekat.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("ManufacturerID");
 
                     b.ToTable("Devices");
                 });
@@ -107,20 +112,20 @@ namespace FPIS_Projekat.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ClientID")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("_ClientID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("_EmployeeID")
+                    b.Property<int>("EmployeeID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("_ClientID");
+                    b.HasIndex("ClientID");
 
-                    b.HasIndex("_EmployeeID");
+                    b.HasIndex("EmployeeID");
 
                     b.ToTable("Offers");
                 });
@@ -132,22 +137,22 @@ namespace FPIS_Projekat.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("OfferID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TariffPackageID")
+                        .HasColumnType("int");
+
                     b.Property<int?>("_DeviceID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("_OfferID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("_TariffPackageID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
+                    b.HasIndex("OfferID");
+
+                    b.HasIndex("TariffPackageID");
+
                     b.HasIndex("_DeviceID");
-
-                    b.HasIndex("_OfferID");
-
-                    b.HasIndex("_TariffPackageID");
 
                     b.ToTable("OfferItems");
                 });
@@ -186,28 +191,43 @@ namespace FPIS_Projekat.Migrations
                     b.Property<int>("NumberOfMinutes")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PackageTypeID")
+                        .HasColumnType("int");
+
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int?>("_PackageTypeID")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
 
-                    b.HasIndex("_PackageTypeID");
+                    b.HasIndex("PackageTypeID");
 
                     b.ToTable("TariffPackages");
+                });
+
+            modelBuilder.Entity("FPIS_Projekat.Models.Device", b =>
+                {
+                    b.HasOne("FPIS_Projekat.Models.Manufacturer", "_Manufacturer")
+                        .WithMany()
+                        .HasForeignKey("ManufacturerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("_Manufacturer");
                 });
 
             modelBuilder.Entity("FPIS_Projekat.Models.Offer", b =>
                 {
                     b.HasOne("FPIS_Projekat.Models.Client", "_Client")
                         .WithMany()
-                        .HasForeignKey("_ClientID");
+                        .HasForeignKey("ClientID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("FPIS_Projekat.Models.Employee", "_Employee")
                         .WithMany()
-                        .HasForeignKey("_EmployeeID");
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("_Client");
 
@@ -216,17 +236,21 @@ namespace FPIS_Projekat.Migrations
 
             modelBuilder.Entity("FPIS_Projekat.Models.OfferItem", b =>
                 {
-                    b.HasOne("FPIS_Projekat.Models.Device", "_Device")
-                        .WithMany()
-                        .HasForeignKey("_DeviceID");
-
                     b.HasOne("FPIS_Projekat.Models.Offer", "_Offer")
                         .WithMany("OfferItems")
-                        .HasForeignKey("_OfferID");
+                        .HasForeignKey("OfferID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("FPIS_Projekat.Models.TariffPackage", "_TariffPackage")
                         .WithMany()
-                        .HasForeignKey("_TariffPackageID");
+                        .HasForeignKey("TariffPackageID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FPIS_Projekat.Models.Device", "_Device")
+                        .WithMany()
+                        .HasForeignKey("_DeviceID");
 
                     b.Navigation("_Device");
 
@@ -239,7 +263,7 @@ namespace FPIS_Projekat.Migrations
                 {
                     b.HasOne("FPIS_Projekat.Models.PackageType", "_PackageType")
                         .WithMany()
-                        .HasForeignKey("_PackageTypeID");
+                        .HasForeignKey("PackageTypeID");
 
                     b.Navigation("_PackageType");
                 });

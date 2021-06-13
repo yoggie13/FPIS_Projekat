@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace FPIS_Projekat.Models
         public int NumberOfMessages { get; set; }
         public int NumberOfMB { get; set; }
         public double Price { get; set; }
+        [ForeignKey("PackageTypeID")]
         public PackageType _PackageType { get; set; }
     }
 }

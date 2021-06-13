@@ -12,8 +12,12 @@ namespace FPIS_Projekat.Models
         [Key, Column(Order = 2)]
         public int ID { get; set; }
         [Key, Column(Order = 1)]
+        [ForeignKey("OfferID")]
+        [Required]
         public Offer _Offer { get; set; }
         public Device _Device { get; set; }
+        [Required]
+        [ForeignKey("TariffPackageID")]
         public TariffPackage _TariffPackage { get; set; }
        
     }

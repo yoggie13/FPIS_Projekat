@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,5 +15,8 @@ namespace FPIS_Projekat.Models
         public string Model { get; set; }
         public string Color { get; set; }
         public double Price { get; set; }
+        [ForeignKey("ManufacturerID")]
+        [Required]
+        public Manufacturer _Manufacturer { get; set; }
     }
 }
