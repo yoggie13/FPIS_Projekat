@@ -51,7 +51,10 @@ namespace FPIS_Projekat
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+               
+
             });
+
         }
     }
 }
