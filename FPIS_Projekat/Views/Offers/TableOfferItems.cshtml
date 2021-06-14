@@ -1,0 +1,25 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@foreach (OfferItem item in ViewBag.Items)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item._Device.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item._Device._Manufacturer.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item._TariffPackage.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item._TariffPackage.Price)
+        </td>
+        <td>
+            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+        </td>
+    </tr>
+}

@@ -23,35 +23,40 @@
                 <label asp-for="Date" class="control-label">Datum</label>
                 <input asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
-
-                <span id="offerItems">
-                    <table>
+                <a href ="/OfferItems/Create" 
+                   onclick="window.open(this.href, 'targetWindow', width = 350, height = 350); return false;">Dodaj stavku ponude</a>
+                <div id="tableOfItems">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>
                                     Uređaj
                                 </th>
                                 <th>
+                                    Proizvođač
+                                </th>
+                                <th>
                                     Paket
+                                </th>
+                                <th>
+                                    Cena
+                                </th>
+                                <th>
+                                    Opcija
                                 </th>
                             </tr>
                         </thead>
-                        <tr>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                1
-                            </td>
-                        </tr>
+                        <div id="partialTable">
+                            <partial name="TableOfferItems.cshtml" />
+                        </div>
                     </table>
-                </span>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
-       
+
     </div>
 </div>
 

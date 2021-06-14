@@ -11,7 +11,7 @@ using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Globalization;
 using System.Data;
-
+using System.ComponentModel;
 
 namespace FPIS_Projekat.Controllers
 {
@@ -24,6 +24,7 @@ namespace FPIS_Projekat.Controllers
         {
             _context = ISContext.getContext();
         }
+
 
         // GET: Offers
         public async Task<IActionResult> Index()
@@ -47,7 +48,7 @@ namespace FPIS_Projekat.Controllers
                 .Include(o => o._Client)
                 .Include(o => o.OfferItems)
                 .FirstOrDefaultAsync(m => m.ID == id);
-                
+
             if (offer == null)
             {
                 return NotFound();
@@ -78,7 +79,9 @@ namespace FPIS_Projekat.Controllers
                 })
                .ToList());
 
-            
+            ViewBag.Items = offerItems;
+
+
             return View();
 
         }
@@ -97,14 +100,14 @@ namespace FPIS_Projekat.Controllers
             offer._Client = _context.Clients
                 .Find(Convert.ToInt32(this.Request.Form["_Client.Name"].ToArray()[0]));
 
-            foreach(OfferItem o in offerItems)
+            foreach (OfferItem o in offerItems)
             {
                 o._Offer = offer;
             }
             offer.OfferItems = offerItems;
 
             var query = _context.Add(offer);
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
@@ -238,6 +241,12 @@ namespace FPIS_Projekat.Controllers
         private bool OfferExists(int id)
         {
             return _context.Offers.Any(e => e.ID == id);
+        }
+
+        [HttpGet, ActionName("LoadItems")]
+        public async Task<IActionResult> loadItems()
+        {
+            return PartialView("TableOfferItems.cshtml");
         }
 
     }
