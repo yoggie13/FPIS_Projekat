@@ -28,6 +28,7 @@ namespace FPIS_Projekat.Data
         {
             optionsBuilder.UseSqlServer("Server = (localdb)\\MSSQLLocalDB; Database = DatabaseFPIS; Trusted_Connection = True; " +
                 "MultipleActiveResultSets = true");
+            optionsBuilder.LogTo(Console.WriteLine);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

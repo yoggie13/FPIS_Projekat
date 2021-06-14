@@ -10,6 +10,8 @@ using FPIS_Projekat.Models;
 using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Globalization;
+using System.Data;
+
 
 namespace FPIS_Projekat.Controllers
 {
@@ -100,29 +102,24 @@ namespace FPIS_Projekat.Controllers
         public async Task<IActionResult> Create([Bind("ID,Date")] Offer offer)
         {
 
-            Employee e = new Employee()
-            {
-                ID = Convert.ToInt32(this.Request.Form["_Employee.Name"].ToArray()[0])
-            };
-            offer._Employee = e;
+            offer._Employee = _context.Employees
+                .Find(Convert.ToInt32(this.Request.Form["_Employee.Name"].ToArray()[0]));
 
-            offer._Client = new Client()
-            {
-                ID = Convert.ToInt32(this.Request.Form["_Client.Name"].ToArray()[0])
-            };
+
+
+            offer._Client = _context.Clients
+                .Find(Convert.ToInt32(this.Request.Form["_Client.Name"].ToArray()[0]));
+
             offer.OfferItems = new List<OfferItem>()
             {
                 new OfferItem()
                 {
                     _Offer = offer,
-                    _Device = new Device()
-                    {
-                        ID = Convert.ToInt32(this.Request.Form["OfferItems[0]._Device.Name"].ToArray()[0])
-                    },
-                    _TariffPackage = new TariffPackage()
-                    {
-                        ID = Convert.ToInt32(this.Request.Form["OfferItems[0]._TariffPackage.Name"].ToArray()[0])
-                    }
+                    _Device = _context.Devices
+                        .Find(Convert.ToInt32(this.Request.Form["OfferItems[0]._Device.Name"].ToArray()[0])),
+                    
+                    _TariffPackage = _context.TariffPackages
+                        .Find(Convert.ToInt32(this.Request.Form["OfferItems[0]._TariffPackage.Name"].ToArray()[0]))
                 }
             };
 
@@ -133,11 +130,12 @@ namespace FPIS_Projekat.Controllers
 
             //offer.ID = (int)id + 1;
 
-            _context.Add(offer);
+            var query = _context.Add(offer);
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
-            return View(offer);
+            //return View(offer);
         }
 
         // GET: Offers/Edit/5
