@@ -18,10 +18,11 @@ namespace FPIS_Projekat.Controllers
     public class OffersController : Controller
     {
         private readonly ISContext _context;
+        public static List<OfferItem> offerItems = new List<OfferItem>();
 
         public OffersController(ISContext context)
         {
-            _context = context;
+            _context = ISContext.getContext();
         }
 
         // GET: Offers
@@ -77,26 +78,7 @@ namespace FPIS_Projekat.Controllers
                 })
                .ToList());
 
-            ViewBag.Devices = new List<Device>(
-               _context.Devices
-               .Include(d => d._Manufacturer)
-               .Select(d => new Device()
-               {
-                   ID = d.ID,
-                   Name = d.Name,
-                   _Manufacturer = d._Manufacturer
-               })
-               .ToList());
-
-            ViewBag.Packages = new List<TariffPackage>(
-              _context.TariffPackages
-              .Select(t => new TariffPackage()
-              {
-                  ID = t.ID,
-                  Name = t.Name
-              })
-              .ToList());
-
+            
             return View();
 
         }
@@ -115,32 +97,17 @@ namespace FPIS_Projekat.Controllers
             offer._Client = _context.Clients
                 .Find(Convert.ToInt32(this.Request.Form["_Client.Name"].ToArray()[0]));
 
-            offer.OfferItems = new List<OfferItem>()
+            foreach(OfferItem o in offerItems)
             {
-                new OfferItem()
-                {
-                    _Offer = offer,
-                    _Device = _context.Devices
-                        .Find(Convert.ToInt32(this.Request.Form["OfferItems[0]._Device.Name"].ToArray()[0])),
-                    
-                    _TariffPackage = _context.TariffPackages
-                        .Find(Convert.ToInt32(this.Request.Form["OfferItems[0]._TariffPackage.Name"].ToArray()[0]))
-                }
-            };
-
-            //int? id = _context.Offers.Max(o => (int? )o.ID);
-
-            //if (id == null)
-            //    id = 0;
-
-            //offer.ID = (int)id + 1;
+                o._Offer = offer;
+            }
+            offer.OfferItems = offerItems;
 
             var query = _context.Add(offer);
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
-            //return View(offer);
         }
 
         // GET: Offers/Edit/5

@@ -14,6 +14,13 @@ namespace FPIS_Projekat.Data
         {
 
         }
+        private static ISContext _context;
+        public static ISContext getContext()
+        {
+            if (_context == null)
+                _context = new ISContext();
+            return _context;
+        }
         public ISContext() { }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Employee> Employees { get; set; }
@@ -28,7 +35,6 @@ namespace FPIS_Projekat.Data
         {
             optionsBuilder.UseSqlServer("Server = (localdb)\\MSSQLLocalDB; Database = DatabaseFPIS; Trusted_Connection = True; " +
                 "MultipleActiveResultSets = true");
-            optionsBuilder.LogTo(Console.WriteLine);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
