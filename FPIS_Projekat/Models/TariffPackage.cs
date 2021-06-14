@@ -17,8 +17,9 @@ namespace FPIS_Projekat.Models
         public int NumberOfMessages { get; set; }
         public int NumberOfMB { get; set; }
         public double Price { get; set; }
-        [ForeignKey("PackageTypeID")]
         public PackageType _PackageType { get; set; }
+        public List<OfferItem> Offers { get; set; }
+
 
         public override string ToString()
         {

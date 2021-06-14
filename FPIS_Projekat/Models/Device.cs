@@ -16,9 +16,10 @@ namespace FPIS_Projekat.Models
         public string Model { get; set; }
         public string Color { get; set; }
         public double Price { get; set; }
-        [ForeignKey("ManufacturerID")]
+        
         [Required]
         public Manufacturer _Manufacturer { get; set; }
+        public List<OfferItem> Offers { get; set; }
 
         public override string ToString()
         {

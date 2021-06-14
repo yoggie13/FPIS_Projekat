@@ -11,6 +11,7 @@ namespace FPIS_Projekat.Models
         [Key]
         public int ID { get; set; }
         public string Name { get; set; }
+        public List<Device> Devices { get; set; }
 
         public override string ToString()
         {

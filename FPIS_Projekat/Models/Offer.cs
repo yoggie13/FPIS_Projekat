@@ -12,10 +12,8 @@ namespace FPIS_Projekat.Models
         [Key]
         public int ID { get; set; }
         [Required]
-        [ForeignKey("EmployeeID")]
         public Employee _Employee { get; set; }
         [Required]
-        [ForeignKey("ClientID")]
         public Client _Client { get; set; }
         public DateTime Date { get; set; }
         public List<OfferItem> OfferItems { get; set; }

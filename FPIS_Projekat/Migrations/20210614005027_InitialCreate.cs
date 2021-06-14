@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FPIS_Projekat.Migrations
 {
-    public partial class InititalCreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -69,22 +69,22 @@ namespace FPIS_Projekat.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EmployeeID = table.Column<int>(type: "int", nullable: false),
-                    ClientID = table.Column<int>(type: "int", nullable: false),
+                    _EmployeeID = table.Column<int>(type: "int", nullable: false),
+                    _ClientID = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Offers", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Offers_Clients_ClientID",
-                        column: x => x.ClientID,
+                        name: "FK_Offers_Clients__ClientID",
+                        column: x => x._ClientID,
                         principalTable: "Clients",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Offers_Employees_EmployeeID",
-                        column: x => x.EmployeeID,
+                        name: "FK_Offers_Employees__EmployeeID",
+                        column: x => x._EmployeeID,
                         principalTable: "Employees",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -100,14 +100,14 @@ namespace FPIS_Projekat.Migrations
                     Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<double>(type: "float", nullable: false),
-                    ManufacturerID = table.Column<int>(type: "int", nullable: false)
+                    _ManufacturerID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Devices", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Devices_Manufacturers_ManufacturerID",
-                        column: x => x.ManufacturerID,
+                        name: "FK_Devices_Manufacturers__ManufacturerID",
+                        column: x => x._ManufacturerID,
                         principalTable: "Manufacturers",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -124,14 +124,14 @@ namespace FPIS_Projekat.Migrations
                     NumberOfMessages = table.Column<int>(type: "int", nullable: false),
                     NumberOfMB = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
-                    PackageTypeID = table.Column<int>(type: "int", nullable: true)
+                    _PackageTypeID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TariffPackages", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_TariffPackages_PackageTypes_PackageTypeID",
-                        column: x => x.PackageTypeID,
+                        name: "FK_TariffPackages_PackageTypes__PackageTypeID",
+                        column: x => x._PackageTypeID,
                         principalTable: "PackageTypes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
@@ -143,67 +143,67 @@ namespace FPIS_Projekat.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OfferID = table.Column<int>(type: "int", nullable: false),
-                    DeviceID = table.Column<int>(type: "int", nullable: true),
-                    TariffPackageID = table.Column<int>(type: "int", nullable: false)
+                    _OfferID = table.Column<int>(type: "int", nullable: false),
+                    _DeviceID = table.Column<int>(type: "int", nullable: true),
+                    _TariffPackageID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OfferItems", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_OfferItems_Devices_DeviceID",
-                        column: x => x.DeviceID,
+                        name: "FK_OfferItems_Devices__DeviceID",
+                        column: x => x._DeviceID,
                         principalTable: "Devices",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_OfferItems_Offers_OfferID",
-                        column: x => x.OfferID,
+                        name: "FK_OfferItems_Offers__OfferID",
+                        column: x => x._OfferID,
                         principalTable: "Offers",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OfferItems_TariffPackages_TariffPackageID",
-                        column: x => x.TariffPackageID,
+                        name: "FK_OfferItems_TariffPackages__TariffPackageID",
+                        column: x => x._TariffPackageID,
                         principalTable: "TariffPackages",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Devices_ManufacturerID",
+                name: "IX_Devices__ManufacturerID",
                 table: "Devices",
-                column: "ManufacturerID");
+                column: "_ManufacturerID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OfferItems_DeviceID",
+                name: "IX_OfferItems__DeviceID",
                 table: "OfferItems",
-                column: "DeviceID");
+                column: "_DeviceID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OfferItems_OfferID",
+                name: "IX_OfferItems__OfferID",
                 table: "OfferItems",
-                column: "OfferID");
+                column: "_OfferID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OfferItems_TariffPackageID",
+                name: "IX_OfferItems__TariffPackageID",
                 table: "OfferItems",
-                column: "TariffPackageID");
+                column: "_TariffPackageID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Offers_ClientID",
+                name: "IX_Offers__ClientID",
                 table: "Offers",
-                column: "ClientID");
+                column: "_ClientID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Offers_EmployeeID",
+                name: "IX_Offers__EmployeeID",
                 table: "Offers",
-                column: "EmployeeID");
+                column: "_EmployeeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TariffPackages_PackageTypeID",
+                name: "IX_TariffPackages__PackageTypeID",
                 table: "TariffPackages",
-                column: "PackageTypeID");
+                column: "_PackageTypeID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

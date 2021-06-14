@@ -37,7 +37,12 @@ namespace FPIS_Projekat.Data
                 .WithMany(of => of.OfferItems);
 
             modelBuilder.Entity<OfferItem>()
-                .HasOne(o => o._TariffPackage);
+                .HasOne(o => o._TariffPackage)
+                .WithMany(t => t.Offers);
+
+            modelBuilder.Entity<OfferItem>()
+                .HasOne(o => o._Device)
+                .WithMany(d => d.Offers);
 
             modelBuilder.Entity<Offer>()
                 .HasOne(o => o._Client)
@@ -47,7 +52,14 @@ namespace FPIS_Projekat.Data
                .HasOne(o => o._Employee)
                .WithMany(e => e.OffersMade);
 
-           
+            modelBuilder.Entity<Device>()
+                 .HasOne(d => d._Manufacturer)
+                 .WithMany(m => m.Devices);
+
+            modelBuilder.Entity<TariffPackage>()
+                .HasOne(t => t._PackageType)
+                .WithMany(p => p.TariffPackages);
+
 
         }
     }

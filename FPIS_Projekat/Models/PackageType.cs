@@ -11,5 +11,6 @@ namespace FPIS_Projekat.Models
         [Key]
         public int ID { get; set; }
         public string Name { get; set; }
+        public List<TariffPackage> TariffPackages { get; set; }
     }
 }

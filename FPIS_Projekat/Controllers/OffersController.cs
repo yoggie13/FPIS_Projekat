@@ -134,7 +134,6 @@ namespace FPIS_Projekat.Controllers
             //offer.ID = (int)id + 1;
 
             _context.Add(offer);
-            //_context.Add(offer.OfferItems);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
