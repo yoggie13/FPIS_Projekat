@@ -14,9 +14,22 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
             <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
+                <label asp-for="_Employee.Name" class="control-label"></label>
+                <select asp-for="_Employee.ID" class="form-control" asp-items="@(new SelectList(ViewBag.Employees, "ID", "Name", Model._Employee.Name))"></select>
+
+                <label asp-for="_Client.Name" class="control-label"></label>
+                <select asp-for="_Client.ID" class="form-control" asp-items="@(new SelectList(ViewBag.Clients, "ID", "Name", Model._Client.ID))"></select>
+
+                <label asp-for="Date" class="control-label">Datum</label>
                 <input asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
+
+                <span id="offer_items">
+                    <label asp-for="OfferItems[0]._Device.Name" class="control-label"></label>
+                    <select asp-for="OfferItems[0]._Device.ID" class="form-control" asp-items="@(new SelectList(ViewBag.Devices, "ID", "Name", Model.OfferItems[0]._Device.ID))"></select>
+                    <label asp-for="OfferItems[0]._TariffPackage.Name" class="control-label"></label>
+                    <select asp-for="OfferItems[0]._TariffPackage.ID" class="form-control" asp-items="@(new SelectList(ViewBag.Packages, "ID", "Name", Model.OfferItems[0]._TariffPackage.ID))"></select>
+                </span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

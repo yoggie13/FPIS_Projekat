@@ -27,7 +27,10 @@ namespace FPIS_Projekat.Controllers
         // GET: Offers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Offers.ToListAsync());
+            return View(await _context.Offers
+                .Include(o => o._Employee)
+                .Include(o => o._Client)
+                .ToListAsync());
         }
 
         // GET: Offers/Details/5
@@ -39,7 +42,11 @@ namespace FPIS_Projekat.Controllers
             }
 
             var offer = await _context.Offers
+                .Include(o => o._Employee)
+                .Include(o => o._Client)
+                .Include(o => o.OfferItems)
                 .FirstOrDefaultAsync(m => m.ID == id);
+                
             if (offer == null)
             {
                 return NotFound();
@@ -62,7 +69,7 @@ namespace FPIS_Projekat.Controllers
                .ToList());
 
             ViewBag.Clients = new List<Client>(
-                _context.Employees
+                _context.Clients
                 .Select(c => new Client()
                 {
                     ID = c.ID,
@@ -105,8 +112,6 @@ namespace FPIS_Projekat.Controllers
             offer._Employee = _context.Employees
                 .Find(Convert.ToInt32(this.Request.Form["_Employee.Name"].ToArray()[0]));
 
-
-
             offer._Client = _context.Clients
                 .Find(Convert.ToInt32(this.Request.Form["_Client.Name"].ToArray()[0]));
 
@@ -145,8 +150,53 @@ namespace FPIS_Projekat.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Employees = new List<Employee>(
+                _context.Employees
+                .Select(e => new Employee()
+                {
+                    ID = e.ID,
+                    Name = e.Name
+                })
+               .ToList());
 
-            var offer = await _context.Offers.FindAsync(id);
+            ViewBag.Clients = new List<Client>(
+                _context.Clients
+                .Select(c => new Client()
+                {
+                    ID = c.ID,
+                    Name = c.Name
+                })
+               .ToList());
+
+            ViewBag.Devices = new List<Device>(
+               _context.Devices
+               .Include(d => d._Manufacturer)
+               .Select(d => new Device()
+               {
+                   ID = d.ID,
+                   Name = d.Name,
+                   _Manufacturer = d._Manufacturer
+               })
+               .ToList());
+
+            ViewBag.Packages = new List<TariffPackage>(
+              _context.TariffPackages
+              .Select(t => new TariffPackage()
+              {
+                  ID = t.ID,
+                  Name = t.Name
+              })
+              .ToList());
+
+            var offer = await _context.Offers
+                     .Include(o => o._Employee)
+                     .Include(o => o._Client)
+                     .Include(o => o.OfferItems)
+                        .ThenInclude(of => of._Device)
+                     .Include(o => o.OfferItems)
+                       .ThenInclude(of => of._TariffPackage)
+                     .FirstOrDefaultAsync(m => m.ID == id);
+
             if (offer == null)
             {
                 return NotFound();
