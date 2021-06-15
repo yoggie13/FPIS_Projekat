@@ -6,6 +6,9 @@
 @foreach (OfferItem item in ViewBag.Items)
 {
     <tr>
+        <td id="itemID">
+            @Html.DisplayFor(modelItem => item.ID)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item._Device.Name)
         </td>
@@ -19,7 +22,7 @@
             @Html.DisplayFor(modelItem => item._TariffPackage.Price)
         </td>
         <td>
-            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            <a id="deleteOfferItem">Delete</a>
         </td>
     </tr>
 }

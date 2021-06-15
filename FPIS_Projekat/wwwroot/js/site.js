@@ -14,3 +14,21 @@
 //        }
 //    });
 //});
+var token = $("[name='__RequestVerificationToken']").val();
+
+
+$("#deleteOfferItem").click(function (e) {
+    e.preventDefault();
+
+    $.ajax({
+        type: "POST",
+        url: `../OfferItems/Delete/${parseInt(document.getElementById("itemID").innerHTML)}`,
+        headers: { "RequestVerificationToken": token },
+        success: function () {
+            alert("Izbrisano");
+        },
+        error: function () {
+            alert("Nije izbrisano");
+        }
+    });
+});

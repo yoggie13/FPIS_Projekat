@@ -161,12 +161,14 @@ namespace FPIS_Projekat.Controllers
         // POST: OfferItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public void DeleteConfirmed(int id)
         {
-            var offerItem = await _context.OfferItems.FindAsync(id);
-            _context.OfferItems.Remove(offerItem);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            //var offerItem = await _context.OfferItems.FindAsync(id);
+            //_context.OfferItems.Remove(offerItem);
+            //await _context.SaveChangesAsync();
+            //return RedirectToAction(nameof(Index));
+
+            OffersController.offerItems.Remove(OffersController.offerItems.Where(of => of.ID == id).First());
         }
 
         private bool OfferItemExists(int id)
