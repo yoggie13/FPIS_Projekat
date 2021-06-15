@@ -246,7 +246,8 @@ namespace FPIS_Projekat.Controllers
         [HttpGet, ActionName("LoadItems")]
         public async Task<IActionResult> loadItems()
         {
-            return PartialView("TableOfferItems.cshtml");
+            ViewBag.Items = offerItems;
+            return PartialView("TableOfferItems");
         }
 
     }

@@ -168,7 +168,7 @@ namespace FPIS_Projekat.Controllers
             //await _context.SaveChangesAsync();
             //return RedirectToAction(nameof(Index));
 
-            OffersController.offerItems.Remove(OffersController.offerItems.Where(of => of.ID == id).First());
+            OffersController.offerItems.RemoveAt(id);
         }
 
         private bool OfferItemExists(int id)

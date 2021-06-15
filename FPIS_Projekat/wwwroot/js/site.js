@@ -2,33 +2,61 @@
 // for details on configuring this project to bundle and minify static web assets.
 // Write your JavaScript code.
 
-//$("#addItemBtn").click(function (event) {
-//    $.ajax({
-//        url: '@Url.Action("LoadItems","Offers")',
-//        dataType: 'html',
-//        success: function (data) {
-//            $('#partialTable').html(data);
-//        },
-//        error: function (request) {
-//            alert(request.responseText)
-//        }
-//    });
-//});
 var token = $("[name='__RequestVerificationToken']").val();
 
-
-$("#deleteOfferItem").click(function (e) {
-    e.preventDefault();
+$("#addItemBtn").click(function (event) {
 
     $.ajax({
-        type: "POST",
-        url: `../OfferItems/Delete/${parseInt(document.getElementById("itemID").innerHTML)}`,
+        url: '../Offers/loadItems',
+        datatype: 'html',
         headers: { "RequestVerificationToken": token },
-        success: function () {
-            alert("Izbrisano");
+        success: function (data) {
+            console.log(data);
+            $('#partialTable').load(data);
         },
-        error: function () {
-            alert("Nije izbrisano");
+        error: function (request) {
+            alert(request)
         }
     });
+});
+
+//var deleteItemBtns = $(".deleteOfferItem");
+
+//for (let i = 0; i < deleteItemBtns.length; i++) {
+    
+//    deleteItemBtns[i].click(function (e) {
+//        e.preventDefault();
+
+//        alert("registrovao2");
+
+//        $.ajax({
+//            type: "POST",
+//            url: `../OfferItems/Delete/${i+1}`,
+//            headers: { "RequestVerificationToken": token },
+//            success: function () {
+//                alert("Izbrisano");
+//            },
+//            error: function () {
+//                alert("Nije izbrisano");
+//            }
+//        });
+//    });
+//}
+
+document.querySelectorAll('.deleteOfferItem').forEach(item => {
+    item.addEventListener('click', event => {
+        event.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            url: `../OfferItems/Delete/${item.id}`,
+            headers: { "RequestVerificationToken": token },
+            success: function () {
+                alert("Izbrisano");
+            },
+            error: function () {
+                alert("Nije izbrisano");
+            }
+        });
+    })
 });

@@ -6,9 +6,6 @@
 @foreach (OfferItem item in ViewBag.Items)
 {
     <tr>
-        <td id="itemID">
-            @Html.DisplayFor(modelItem => item.ID)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item._Device.Name)
         </td>
@@ -22,7 +19,7 @@
             @Html.DisplayFor(modelItem => item._TariffPackage.Price)
         </td>
         <td>
-            <a id="deleteOfferItem">Delete</a>
+            <a class="deleteOfferItem" id =@ViewBag.Items.IndexOf(item) style="cursor:pointer;color:dodgerblue;">Delete</a>
         </td>
     </tr>
 }
