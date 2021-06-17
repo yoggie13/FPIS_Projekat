@@ -13,7 +13,7 @@ namespace FPIS_Projekat.Controllers
     public class OfferItemsController : Controller
     {
         private readonly ISContext _context;
-
+        private static bool done;
 
         public OfferItemsController(ISContext context)
         {
@@ -54,7 +54,8 @@ namespace FPIS_Projekat.Controllers
                {
                    ID = d.ID,
                    Name = d.Name,
-                   _Manufacturer = d._Manufacturer
+                   _Manufacturer = d._Manufacturer,
+                   Price = d.Price
                })
                .ToList());
 
@@ -86,8 +87,23 @@ namespace FPIS_Projekat.Controllers
                         .Find(Convert.ToInt32(this.Request.Form["_TariffPackage.ID"].ToArray()[0]))
             });
 
+            setDone(true);
+
             return RedirectToAction(nameof(Create));
         }
+        public static void setDone(bool val)
+        {
+            done = val;
+        }
+
+        public static async Task<bool> getDone()
+        {
+            while(done == false)
+            {
+            }
+            return done;
+        }
+        
 
         // GET: OfferItems/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -175,5 +191,6 @@ namespace FPIS_Projekat.Controllers
         {
             return _context.OfferItems.Any(e => e.ID == id);
         }
+
     }
 }

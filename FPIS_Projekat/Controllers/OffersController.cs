@@ -81,6 +81,13 @@ namespace FPIS_Projekat.Controllers
 
             ViewBag.Items = offerItems;
 
+            ViewBag.Price = 0;
+            foreach (OfferItem of in offerItems)
+            {
+                ViewBag.Price += of._Device.Price;
+                ViewBag.Price += of._TariffPackage.Price;
+            }
+
 
             return View();
 
@@ -246,7 +253,17 @@ namespace FPIS_Projekat.Controllers
         [HttpGet, ActionName("LoadItems")]
         public async Task<IActionResult> loadItems()
         {
+            await OfferItemsController.getDone();
+            OfferItemsController.setDone(false);
+
             ViewBag.Items = offerItems;
+
+            ViewBag.Price = 0;
+            foreach (OfferItem of in offerItems)
+            {
+                ViewBag.Price += of._Device.Price;
+            }
+            
             return PartialView("TableOfferItems");
         }
 

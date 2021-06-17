@@ -5,21 +5,40 @@
 }
 @foreach (OfferItem item in ViewBag.Items)
 {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item._Device.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item._Device._Manufacturer.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item._Device.Price)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item._TariffPackage.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item._TariffPackage.Price)
+    </td>
+    <td>
+        <a class="deleteOfferItem" id=@ViewBag.Items.IndexOf(item) style="cursor:pointer;color:dodgerblue;">Delete</a>
+    </td>
+</tr>
+}
+<tfoot>
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item._Device.Name)
+            Ukupna suma
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item._Device._Manufacturer.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item._TariffPackage.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item._TariffPackage.Price)
         </td>
         <td>
-            <a class="deleteOfferItem" id =@ViewBag.Items.IndexOf(item) style="cursor:pointer;color:dodgerblue;">Delete</a>
+            @ViewBag.Price
         </td>
     </tr>
-}
+</tfoot>

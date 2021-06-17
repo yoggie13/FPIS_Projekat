@@ -5,14 +5,17 @@
 var token = $("[name='__RequestVerificationToken']").val();
 
 $("#addItemBtn").click(function (event) {
+    event.preventDefault();
+
+    $("#createOfferItem").submit();
+
+    window.opener.$('#partialTable').html = "";
 
     $.ajax({
         url: '../Offers/loadItems',
-        datatype: 'html',
         headers: { "RequestVerificationToken": token },
         success: function (data) {
-            console.log(data);
-            $('#partialTable').load(data);
+            window.opener.$('#partialTable').append(data);
         },
         error: function (request) {
             alert(request)
