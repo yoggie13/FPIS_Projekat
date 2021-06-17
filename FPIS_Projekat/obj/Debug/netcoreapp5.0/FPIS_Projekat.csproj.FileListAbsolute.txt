@@ -133,7 +133,6 @@ C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcore
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\Offers\Create.cshtml.g.cs
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\Offers\Delete.cshtml.g.cs
-C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\Offers\Details.cshtml.g.cs
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\Offers\Edit.cshtml.g.cs
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\Offers\Index.cshtml.g.cs
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\Shared\Error.cshtml.g.cs
@@ -150,8 +149,4 @@ C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcore
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\FPIS_Projekat.pdb
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\FPIS_Projekat.genruntimeconfig.cache
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\OfferItems\Create.cshtml.g.cs
-C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\OfferItems\Delete.cshtml.g.cs
-C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\OfferItems\Details.cshtml.g.cs
-C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\OfferItems\Edit.cshtml.g.cs
-C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\OfferItems\Index.cshtml.g.cs
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\Offers\TableOfferItems.cshtml.g.cs
