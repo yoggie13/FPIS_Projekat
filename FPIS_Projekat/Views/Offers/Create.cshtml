@@ -23,8 +23,8 @@
                 <label asp-for="Date" class="control-label">Datum</label>
                 <input asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
-                <a href ="/OfferItems/Create" 
-                   onclick="window.open(this.href, 'targetWindow', width = 350, height = 350); return false;">Dodaj stavku ponude</a>
+                <a href="/OfferItems/Create"
+                   onclick="window.open(this.href, '_blank', width = 400, height = 400); return false;">Dodaj stavku ponude</a>
                 <div id="tableOfItems">
                     <table class="table">
                         <thead>
@@ -49,9 +49,9 @@
                                 </th>
                             </tr>
                         </thead>
-                        <div id="partialTable">
-                           
-                        </div>
+                        <tbody id="tableBody">
+                            <partial name="TableOfferItems" />
+                        </tbody>
                     </table>
                 </div>
             </div>

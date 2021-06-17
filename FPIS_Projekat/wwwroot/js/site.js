@@ -5,17 +5,14 @@
 var token = $("[name='__RequestVerificationToken']").val();
 
 $("#addItemBtn").click(function (event) {
-    event.preventDefault();
-
-    $("#createOfferItem").submit();
-
-    window.opener.$('#partialTable').html = "";
+    window.opener.$("#tableBody").empty();
 
     $.ajax({
-        url: '../Offers/loadItems',
+        url: '../Offers/LoadItems',
         headers: { "RequestVerificationToken": token },
+        dataType: 'html',
         success: function (data) {
-            window.opener.$('#partialTable').append(data);
+            window.opener.$("#tableBody").append(data);
         },
         error: function (request) {
             alert(request)
@@ -23,28 +20,6 @@ $("#addItemBtn").click(function (event) {
     });
 });
 
-//var deleteItemBtns = $(".deleteOfferItem");
-
-//for (let i = 0; i < deleteItemBtns.length; i++) {
-    
-//    deleteItemBtns[i].click(function (e) {
-//        e.preventDefault();
-
-//        alert("registrovao2");
-
-//        $.ajax({
-//            type: "POST",
-//            url: `../OfferItems/Delete/${i+1}`,
-//            headers: { "RequestVerificationToken": token },
-//            success: function () {
-//                alert("Izbrisano");
-//            },
-//            error: function () {
-//                alert("Nije izbrisano");
-//            }
-//        });
-//    });
-//}
 
 document.querySelectorAll('.deleteOfferItem').forEach(item => {
     item.addEventListener('click', event => {
