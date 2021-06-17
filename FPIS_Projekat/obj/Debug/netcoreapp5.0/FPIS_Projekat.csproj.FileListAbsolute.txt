@@ -129,8 +129,6 @@ C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcore
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\FPIS_Projekat.TagHelpers.input.cache
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\FPIS_Projekat.TagHelpers.output.cache
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\FPIS_Projekat.RazorCoreGenerate.cache
-C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\Home\Index.cshtml.g.cs
-C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\Offers\Create.cshtml.g.cs
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\Offers\Delete.cshtml.g.cs
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\Offers\Edit.cshtml.g.cs
