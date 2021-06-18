@@ -5,6 +5,7 @@
 var token = $("[name='__RequestVerificationToken']").val();
 
 $("#addItemBtn").click(function (event) {
+    debugger;
     window.opener.$("#tableBody").empty();
 
     $.ajax({
@@ -24,6 +25,7 @@ $("#addItemBtn").click(function (event) {
 document.querySelectorAll('.deleteOfferItem').forEach(item => {
     item.addEventListener('click', event => {
         event.preventDefault();
+        debugger;
 
         $.ajax({
             type: "POST",
@@ -36,5 +38,19 @@ document.querySelectorAll('.deleteOfferItem').forEach(item => {
                 alert("Nije izbrisano");
             }
         });
-    })
+
+        $("#tableBody").empty();
+
+        $.ajax({
+            url: '../Offers/LoadItems',
+            headers: { "RequestVerificationToken": token },
+            dataType: 'html',
+            success: function (data) {
+                $("#tableBody").append(data);
+            },
+            error: function (request) {
+                alert(request)
+            }
+        });
+    });
 });
