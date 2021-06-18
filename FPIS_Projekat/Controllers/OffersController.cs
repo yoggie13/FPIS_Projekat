@@ -29,10 +29,7 @@ namespace FPIS_Projekat.Controllers
         // GET: Offers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Offers
-                .Include(o => o._Employee)
-                .Include(o => o._Client)
-                .ToListAsync());
+            return View();
         }
 
         // GET: Offers/Details/5
@@ -93,6 +90,20 @@ namespace FPIS_Projekat.Controllers
 
         }
 
+        //POST: Offers/Search
+        public async Task<IActionResult> Search([Bind("Date")] Offer offer)
+        {
+
+            
+            ViewBag.Offers = _context.Offers
+                .Where(o => o.Date == offer.Date.Date)
+                .Include(o => o._Employee)
+                .Include(o => o._Client);
+
+            return View();
+
+        }
+
         // POST: Offers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -106,6 +117,8 @@ namespace FPIS_Projekat.Controllers
 
             offer._Client = _context.Clients
                 .Find(Convert.ToInt32(this.Request.Form["_Client.Name"].ToArray()[0]));
+
+            offer.Date = offer.Date.Date;
 
             foreach (OfferItem o in offerItems)
             {

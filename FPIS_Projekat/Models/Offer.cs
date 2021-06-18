@@ -15,6 +15,8 @@ namespace FPIS_Projekat.Models
         public Employee _Employee { get; set; }
         [Required]
         public Client _Client { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Date { get; set; }
         public List<OfferItem> OfferItems { get; set; }
 
