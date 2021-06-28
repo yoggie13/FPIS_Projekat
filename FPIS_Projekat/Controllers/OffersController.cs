@@ -200,6 +200,7 @@ namespace FPIS_Projekat.Controllers
               })
               .ToList());
 
+
             var offer = await _context.Offers
                      .Include(o => o._Employee)
                      .Include(o => o._Client)
@@ -213,6 +214,9 @@ namespace FPIS_Projekat.Controllers
             {
                 return NotFound();
             }
+            offerItems = offer.OfferItems;
+            ViewBag.Items = offerItems;
+
             return View(offer);
         }
 
@@ -232,6 +236,8 @@ namespace FPIS_Projekat.Controllers
             {
                 try
                 {
+                    _context.OfferItems
+                        .RemoveRange(_context.OfferItems.Where(o => o._Offer.ID == offer.ID));
                     _context.Update(offer);
                     await _context.SaveChangesAsync();
                 }
@@ -321,7 +327,15 @@ namespace FPIS_Projekat.Controllers
 
             setDone(true);
 
-            return RedirectToAction(nameof(Create));
+            return new EmptyResult();
+            //var url = Request.Headers["Referer"].ToString().Split("/");
+
+            //if (url.Last() == "Create")
+            //    return RedirectToAction(nameof(Create));
+            //else if (url[url.Length - 2] == "Edit")
+            //    return RedirectToAction(nameof(Edit), );
+
+            //return RedirectToAction(nameof(Index));
         }
         [HttpPost, ActionName("DeleteOfferItem")]
         [ValidateAntiForgeryToken]
@@ -330,7 +344,9 @@ namespace FPIS_Projekat.Controllers
 
             offerItems.RemoveAt(id);
 
-            return RedirectToAction(nameof(Create));
+            //return RedirectToAction(nameof(Create));
+            return new EmptyResult();
+
         }
         public static void setDone(bool val)
         {

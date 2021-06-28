@@ -69,3 +69,24 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+dialog{
+    top: 50px !important;
+    width: 50% !important;
+    height: 50% !important;
+    animation-name: slideIn !important;
+    animation-duration: 2s !important;
+    border: 1px solid rgb(171 169 169 / 0.80) !important;
+    border-radius: 20px !important;
+}
+.modal-content{
+    border: none;
+}
+@keyframes slideIn{
+    from{
+        top: -100px !important;
+    }
+    to {
+        top: 50px !important;
+    }
+}
