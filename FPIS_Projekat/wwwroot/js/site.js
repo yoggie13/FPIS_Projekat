@@ -39,22 +39,5 @@ document.querySelectorAll('.deleteOfferItem').forEach(item => {
 
         $(`#${item.parentNode.parentNode.id}`).remove();
 
-
-
-
-
-        //$("#tableBody").empty();
-
-        //$.ajax({
-        //    url: '../Offers/LoadItems',
-        //    headers: { "RequestVerificationToken": token },
-        //    dataType: 'html',
-        //    success: function (data) {
-        //        $("#tableBody").append(data);
-        //    },
-        //    error: function (request) {
-        //        alert(request)
-        //    }
-        //});
     });
 });
