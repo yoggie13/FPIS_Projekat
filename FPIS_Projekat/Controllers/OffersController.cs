@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Globalization;
 using System.Data;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace FPIS_Projekat.Controllers
 {
@@ -19,6 +20,7 @@ namespace FPIS_Projekat.Controllers
     {
         private readonly ISContext _context;
         public static List<OfferItem> offerItems = new List<OfferItem>();
+        private static bool done;
 
         public OffersController(ISContext context)
         {
@@ -75,6 +77,26 @@ namespace FPIS_Projekat.Controllers
                     Name = c.Name
                 })
                .ToList());
+            ViewBag.Devices = new List<Device>(
+               _context.Devices
+               .Include(d => d._Manufacturer)
+               .Select(d => new Device()
+               {
+                   ID = d.ID,
+                   Name = d.Name,
+                   _Manufacturer = d._Manufacturer,
+                   Price = d.Price
+               })
+               .ToList());
+
+            ViewBag.Packages = new List<TariffPackage>(
+              _context.TariffPackages
+              .Select(t => new TariffPackage()
+              {
+                  ID = t.ID,
+                  Name = t.Name
+              })
+              .ToList());
 
             ViewBag.Items = offerItems;
 
@@ -264,20 +286,63 @@ namespace FPIS_Projekat.Controllers
         }
 
         [HttpGet, ActionName("LoadItems")]
-        public async Task<IActionResult> loadItems()
+        public async Task<string> loadItems()
         {
-            await OfferItemsController.getDone();
-            OfferItemsController.setDone(false);
+            await getDone();
+            setDone(false);
 
-            ViewBag.Items = offerItems;
+            //ViewBag.Items = offerItems;
 
-            ViewBag.Price = 0;
-            foreach (OfferItem of in offerItems)
+            //ViewBag.Price = 0;
+            //foreach (OfferItem of in offerItems)
+            //{
+            //    ViewBag.Price += of._Device.Price;
+            //}
+
+
+
+            //return PartialView("TableOfferItems");
+
+            return JsonSerializer.Serialize<OfferItem>(offerItems.LastOrDefault());
+        }
+        [HttpPost, ActionName("CreateOfferItem")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateOfferItem([Bind("ID")] OfferItem offerItem)
+        {
+
+            offerItems.Add(new OfferItem()
             {
-                ViewBag.Price += of._Device.Price;
+                _Device = _context.Devices
+                        .Find(Convert.ToInt32(this.Request.Form["OfferItems[0]._Device.ID"].ToArray()[0])),
+
+                _TariffPackage = _context.TariffPackages
+                        .Find(Convert.ToInt32(this.Request.Form["OfferItems[0]._TariffPackage.ID"].ToArray()[0]))
+            });
+
+            setDone(true);
+
+            return RedirectToAction(nameof(Create));
+        }
+        [HttpPost, ActionName("DeleteOfferItem")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteOfferItem(int id)
+        {
+
+            offerItems.RemoveAt(id);
+
+            return RedirectToAction(nameof(Create));
+        }
+        public static void setDone(bool val)
+        {
+            done = val;
+        }
+
+        public static async Task<bool> getDone()
+        {
+            while (done == false)
+            {
             }
-            
-            return PartialView("TableOfferItems");
+            return done;
         }
 
     }

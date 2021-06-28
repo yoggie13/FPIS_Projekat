@@ -146,6 +146,5 @@ C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcore
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\ref\FPIS_Projekat.dll
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\FPIS_Projekat.pdb
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\FPIS_Projekat.genruntimeconfig.cache
-C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\OfferItems\Create.cshtml.g.cs
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\Offers\TableOfferItems.cshtml.g.cs
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\Offers\Search.cshtml.g.cs

@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\OfferItems\**" />
+    <Content Remove="Views\OfferItems\**" />
+    <EmbeddedResource Remove="Views\OfferItems\**" />
+    <None Remove="Views\OfferItems\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\OfferItemsController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.7">
       <PrivateAssets>all</PrivateAssets>

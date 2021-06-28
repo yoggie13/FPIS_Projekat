@@ -23,8 +23,7 @@
                 <label asp-for="Date" class="control-label">Datum</label>
                 <input asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
-                <a href="/OfferItems/Create"
-                   onclick="window.open(this.href, '_blank', width = 400, height = 400); return false;">Dodaj stavku ponude</a>
+                <button id="openModal" class="btn btn-primary">Dodaj stavku ponude</button>
                 <div id="tableOfItems">
                     <table class="table">
                         <thead>
@@ -66,6 +65,28 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+<dialog id="modal" class="modal">
+    <div class="modal-content">
+        <h4>OfferItem</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form id="createOfferItem" asp-action="CreateOfferItem">
+                    <span id="items">
+                        <label asp-for="OfferItems[0]._Device.Name" class="control-label"></label>
+                        <select asp-for="OfferItems[0]._Device.ID" class="form-control" asp-items="@(new SelectList(ViewBag.Devices, "ID", "Name"))"></select>
+
+                        <label asp-for="OfferItems[0]._TariffPackage.Name" class="control-label"></label>
+                        <select asp-for="OfferItems[0]._TariffPackage.ID" class="form-control" asp-items="@(new SelectList(ViewBag.Packages, "ID", "Name"))"></select>
+                    </span>
+                    <div class="form-group">
+                        <input type="submit" id="addItemBtn" value="Dodaj stavku" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</dialog>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -4,19 +4,18 @@
 
 var token = $("[name='__RequestVerificationToken']").val();
 
+$("#openModal").click(function (event) {
+    event.preventDefault();
+    $("#modal").show();
+});
+
 $("#addItemBtn").click(function (event) {
-    debugger;
-    window.opener.$("#tableBody").empty();
 
     $.ajax({
         url: '../Offers/LoadItems',
         headers: { "RequestVerificationToken": token },
-        dataType: 'html',
         success: function (data) {
-            window.opener.$("#tableBody").append(data);
-        },
-        error: function (request) {
-            alert(request)
+            $("#tableBody").append(data);
         }
     });
 });
@@ -25,11 +24,10 @@ $("#addItemBtn").click(function (event) {
 document.querySelectorAll('.deleteOfferItem').forEach(item => {
     item.addEventListener('click', event => {
         event.preventDefault();
-        debugger;
 
         $.ajax({
             type: "POST",
-            url: `../OfferItems/Delete/${item.id}`,
+            url: `../Offers/DeleteOfferItem/${item.parentNode.parentNode.id}`,
             headers: { "RequestVerificationToken": token },
             success: function () {
                 alert("Izbrisano");
@@ -39,18 +37,24 @@ document.querySelectorAll('.deleteOfferItem').forEach(item => {
             }
         });
 
-        $("#tableBody").empty();
+        $(`#${item.parentNode.parentNode.id}`).remove();
 
-        $.ajax({
-            url: '../Offers/LoadItems',
-            headers: { "RequestVerificationToken": token },
-            dataType: 'html',
-            success: function (data) {
-                $("#tableBody").append(data);
-            },
-            error: function (request) {
-                alert(request)
-            }
-        });
+
+
+
+
+        //$("#tableBody").empty();
+
+        //$.ajax({
+        //    url: '../Offers/LoadItems',
+        //    headers: { "RequestVerificationToken": token },
+        //    dataType: 'html',
+        //    success: function (data) {
+        //        $("#tableBody").append(data);
+        //    },
+        //    error: function (request) {
+        //        alert(request)
+        //    }
+        //});
     });
 });
