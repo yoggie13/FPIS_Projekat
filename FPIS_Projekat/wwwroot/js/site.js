@@ -30,7 +30,7 @@ document.querySelectorAll('.deleteOfferItem').forEach(item => {
             url: `../Offers/DeleteOfferItem/${item.parentNode.parentNode.id}`,
             headers: { "RequestVerificationToken": token },
             success: function () {
-                alert("Izbrisano");
+                alert("Uspešno izbrisano");
             },
             error: function () {
                 alert("Nije izbrisano");
