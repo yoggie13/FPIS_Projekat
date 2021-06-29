@@ -4,20 +4,24 @@
 
 var token = $("[name='__RequestVerificationToken']").val();
 
+window.onload = function () {
+    if (window.location.href.indexOf("Create") > -1) {
+        if (localStorage.getItem("employee") !== null) {
+            document.getElementById("zEmployee_Name").options.selectedIndex = localStorage.getItem("employee");
+            document.getElementById("zClient_Name").options.selectedIndex = localStorage.getItem("client");
+            document.getElementById("Date").value = localStorage.getItem("date");
+        }
+    }
+};
+
 $("#openModal").click(function (event) {
     event.preventDefault();
+
+    localStorage.setItem("employee", document.getElementById("zEmployee_Name").selectedIndex);
+    localStorage.setItem("client", document.getElementById("zClient_Name").selectedIndex);
+    localStorage.setItem("date", document.getElementById("Date").value);
+
     $("#modal").show();
-});
-
-$("#addItemBtn").click(function (event) {
-
-    $.ajax({
-        url: '../Offers/LoadItems',
-        headers: { "RequestVerificationToken": token },
-        success: function (data) {
-            $("#tableBody").append(data);
-        }
-    });
 });
 
 

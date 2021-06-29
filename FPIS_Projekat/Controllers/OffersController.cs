@@ -327,15 +327,7 @@ namespace FPIS_Projekat.Controllers
 
             setDone(true);
 
-            return new EmptyResult();
-            //var url = Request.Headers["Referer"].ToString().Split("/");
-
-            //if (url.Last() == "Create")
-            //    return RedirectToAction(nameof(Create));
-            //else if (url[url.Length - 2] == "Edit")
-            //    return RedirectToAction(nameof(Edit), );
-
-            //return RedirectToAction(nameof(Index));
+            return RedirectToAction("Create");
         }
         [HttpPost, ActionName("DeleteOfferItem")]
         [ValidateAntiForgeryToken]
