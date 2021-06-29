@@ -336,8 +336,7 @@ namespace FPIS_Projekat.Controllers
 
             offerItems.RemoveAt(id);
 
-            //return RedirectToAction(nameof(Create));
-            return new EmptyResult();
+            return RedirectToAction(nameof(Create));
 
         }
         public static void setDone(bool val)

@@ -23,7 +23,7 @@
                 @Html.DisplayFor(modelItem => item._TariffPackage.Price)
             </td>
             <td>
-                <a class="deleteOfferItem" style="cursor:pointer;color:dodgerblue;">Delete</a>
+                <button asp-controller="Offers" asp-action="DeleteOfferItem" asp-route-id=@ViewBag.Items.IndexOf(item) class="btn btn-outline-secondary">Delete</button>
             </td>
         </tr>
     }

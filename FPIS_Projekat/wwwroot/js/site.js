@@ -25,23 +25,23 @@ $("#openModal").click(function (event) {
 });
 
 
-document.querySelectorAll('.deleteOfferItem').forEach(item => {
-    item.addEventListener('click', event => {
-        event.preventDefault();
+//document.querySelectorAll('.deleteOfferItem').forEach(item => {
+//    item.addEventListener('click', event => {
+//        event.preventDefault();
 
-        $.ajax({
-            type: "POST",
-            url: `../Offers/DeleteOfferItem/${item.parentNode.parentNode.id}`,
-            headers: { "RequestVerificationToken": token },
-            success: function () {
-                alert("Uspešno izbrisano");
-            },
-            error: function () {
-                alert("Nije izbrisano");
-            }
-        });
+//        $.ajax({
+//            type: "POST",
+//            url: `../Offers/DeleteOfferItem/${item.parentNode.parentNode.id}`,
+//            headers: { "RequestVerificationToken": token },
+//            success: function () {
+//                alert("Uspešno izbrisano");
+//            },
+//            error: function () {
+//                alert("Nije izbrisano");
+//            }
+//        });
 
-        $(`#${item.parentNode.parentNode.id}`).remove();
+//        $(`#${item.parentNode.parentNode.id}`).remove();
 
-    });
-});
+//    });
+//});
