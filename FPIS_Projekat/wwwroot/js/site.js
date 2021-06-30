@@ -12,6 +12,12 @@ window.onload = function () {
             document.getElementById("Date").value = localStorage.getItem("date");
         }
     }
+    if (window.location.href.indexOf("Create") <= -1) {
+        localStorage.removeItem("employee");
+        localStorage.removeItem("client");
+        localStorage.removeItem("date");
+
+    }
 };
 
 $("#openModal").click(function (event) {

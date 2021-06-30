@@ -100,12 +100,12 @@ namespace FPIS_Projekat.Controllers
 
             ViewBag.Items = offerItems;
 
-            ViewBag.Price = 0;
-            foreach (OfferItem of in offerItems)
-            {
-                ViewBag.Price += of._Device.Price;
-                ViewBag.Price += of._TariffPackage.Price;
-            }
+            //ViewBag.Price = 0;
+            //foreach (OfferItem of in offerItems)
+            //{
+            //    ViewBag.Price += of._Device.Price;
+            //    ViewBag.Price += of._TariffPackage.Price;
+            //}
 
 
             return View();
@@ -331,12 +331,12 @@ namespace FPIS_Projekat.Controllers
         }
         [HttpPost, ActionName("DeleteOfferItem")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteOfferItem(int id)
+        public async Task<IActionResult> DeleteOfferItem(int ide)
         {
 
-            offerItems.RemoveAt(id);
+            offerItems.RemoveAt(ide);
 
-            return RedirectToAction(nameof(Create));
+            return Redirect(Request.Headers["Referer"]);
 
         }
         public static void setDone(bool val)
