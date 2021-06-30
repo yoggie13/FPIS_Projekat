@@ -12,12 +12,6 @@ window.onload = function () {
             document.getElementById("Date").value = localStorage.getItem("date");
         }
     }
-    if (window.location.href.indexOf("Create") <= -1) {
-        localStorage.removeItem("employee");
-        localStorage.removeItem("client");
-        localStorage.removeItem("date");
-
-    }
 };
 
 $("#openModal").click(function (event) {
@@ -29,25 +23,8 @@ $("#openModal").click(function (event) {
 
     $("#modal").show();
 });
-
-
-//document.querySelectorAll('.deleteOfferItem').forEach(item => {
-//    item.addEventListener('click', event => {
-//        event.preventDefault();
-
-//        $.ajax({
-//            type: "POST",
-//            url: `../Offers/DeleteOfferItem/${item.parentNode.parentNode.id}`,
-//            headers: { "RequestVerificationToken": token },
-//            success: function () {
-//                alert("Uspešno izbrisano");
-//            },
-//            error: function () {
-//                alert("Nije izbrisano");
-//            }
-//        });
-
-//        $(`#${item.parentNode.parentNode.id}`).remove();
-
-//    });
-//});
+$("#createOrder").click(function (event) {
+    localStorage.removeItem("employee");
+    localStorage.removeItem("client");
+    localStorage.removeItem("date");
+});

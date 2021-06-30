@@ -9,10 +9,11 @@ namespace FPIS_Projekat.Models
 {
     public class OfferItem
     {
-        [Key]
-        public int ID { get; set; }
         [Required]
         public Offer _Offer { get; set; }
+        [Key]
+        public int ID { get; set; }
+    
         public Device _Device { get; set; }
         [Required]
         public TariffPackage _TariffPackage { get; set; }

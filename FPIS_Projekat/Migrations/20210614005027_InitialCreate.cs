@@ -141,9 +141,9 @@ namespace FPIS_Projekat.Migrations
                 name: "OfferItems",
                 columns: table => new
                 {
+                    _OfferID = table.Column<int>(type: "int", nullable: false),
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    _OfferID = table.Column<int>(type: "int", nullable: false),
                     _DeviceID = table.Column<int>(type: "int", nullable: true),
                     _TariffPackageID = table.Column<int>(type: "int", nullable: false)
                 },

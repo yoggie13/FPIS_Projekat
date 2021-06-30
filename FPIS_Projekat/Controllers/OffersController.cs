@@ -19,7 +19,10 @@ namespace FPIS_Projekat.Controllers
     public class OffersController : Controller
     {
         private readonly ISContext _context;
-        public static List<OfferItem> offerItems = new List<OfferItem>();
+        public static List<OfferItem> offerItemsCreate = new List<OfferItem>();
+        public static List<OfferItem> offerItemsEdit = new List<OfferItem>();
+
+
         private static bool done;
 
         public OffersController(ISContext context)
@@ -34,27 +37,6 @@ namespace FPIS_Projekat.Controllers
             return View();
         }
 
-        // GET: Offers/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var offer = await _context.Offers
-                .Include(o => o._Employee)
-                .Include(o => o._Client)
-                .Include(o => o.OfferItems)
-                .FirstOrDefaultAsync(m => m.ID == id);
-
-            if (offer == null)
-            {
-                return NotFound();
-            }
-
-            return View(offer);
-        }
 
         // GET: Offers/Create
         public IActionResult Create()
@@ -98,7 +80,7 @@ namespace FPIS_Projekat.Controllers
               })
               .ToList());
 
-            ViewBag.Items = offerItems;
+            ViewBag.Items = offerItemsCreate;
 
             //ViewBag.Price = 0;
             //foreach (OfferItem of in offerItems)
@@ -116,7 +98,7 @@ namespace FPIS_Projekat.Controllers
         public async Task<IActionResult> Search([Bind("Date")] Offer offer)
         {
 
-            
+
             ViewBag.Offers = _context.Offers
                 .Where(o => o.Date == offer.Date.Date)
                 .Include(o => o._Employee)
@@ -142,15 +124,18 @@ namespace FPIS_Projekat.Controllers
 
             offer.Date = offer.Date.Date;
 
-            foreach (OfferItem o in offerItems)
+            foreach (OfferItem o in offerItemsCreate)
             {
                 o._Offer = offer;
             }
-            offer.OfferItems = offerItems;
+            offer.OfferItems = offerItemsCreate;
 
             var query = _context.Add(offer);
 
             await _context.SaveChangesAsync();
+
+            offerItemsCreate = new List<OfferItem>();
+
             return RedirectToAction(nameof(Index));
 
         }
@@ -214,8 +199,8 @@ namespace FPIS_Projekat.Controllers
             {
                 return NotFound();
             }
-            offerItems = offer.OfferItems;
-            ViewBag.Items = offerItems;
+            offerItemsEdit = offer.OfferItems;
+            ViewBag.Items = offerItemsEdit;
 
             return View(offer);
         }
@@ -249,11 +234,17 @@ namespace FPIS_Projekat.Controllers
                     }
                     else
                     {
+                        offerItemsCreate = new List<OfferItem>();
+
                         throw;
                     }
                 }
+                offerItemsCreate = new List<OfferItem>();
+
                 return RedirectToAction(nameof(Index));
             }
+            offerItemsCreate = new List<OfferItem>();
+
             return View(offer);
         }
 
@@ -283,6 +274,7 @@ namespace FPIS_Projekat.Controllers
             var offer = await _context.Offers.FindAsync(id);
             _context.Offers.Remove(offer);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -291,50 +283,44 @@ namespace FPIS_Projekat.Controllers
             return _context.Offers.Any(e => e.ID == id);
         }
 
-        [HttpGet, ActionName("LoadItems")]
-        public async Task<string> loadItems()
-        {
-            await getDone();
-            setDone(false);
-
-            //ViewBag.Items = offerItems;
-
-            //ViewBag.Price = 0;
-            //foreach (OfferItem of in offerItems)
-            //{
-            //    ViewBag.Price += of._Device.Price;
-            //}
-
-
-
-            //return PartialView("TableOfferItems");
-
-            return JsonSerializer.Serialize<OfferItem>(offerItems.LastOrDefault());
-        }
         [HttpPost, ActionName("CreateOfferItem")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateOfferItem([Bind("ID")] OfferItem offerItem)
         {
-
-            offerItems.Add(new OfferItem()
+            if (Request.Headers["Referer"].ToString().Contains("Create"))
             {
-                _Device = _context.Devices
-                        .Find(Convert.ToInt32(this.Request.Form["OfferItems[0]._Device.ID"].ToArray()[0])),
+                offerItemsCreate.Add(new OfferItem()
+                {
+                    _Device = _context.Devices
+                            .Find(Convert.ToInt32(this.Request.Form["OfferItems[0]._Device.ID"].ToArray()[0])),
 
-                _TariffPackage = _context.TariffPackages
-                        .Find(Convert.ToInt32(this.Request.Form["OfferItems[0]._TariffPackage.ID"].ToArray()[0]))
-            });
+                    _TariffPackage = _context.TariffPackages
+                            .Find(Convert.ToInt32(this.Request.Form["OfferItems[0]._TariffPackage.ID"].ToArray()[0]))
+                });
+            }
+            else if (Request.Headers["Referer"].ToString().Contains("Edit"))
+            {
+                offerItemsEdit.Add(new OfferItem()
+                {
+                    _Device = _context.Devices
+                                       .Find(Convert.ToInt32(this.Request.Form["OfferItems[0]._Device.ID"].ToArray()[0])),
 
+                    _TariffPackage = _context.TariffPackages
+                                       .Find(Convert.ToInt32(this.Request.Form["OfferItems[0]._TariffPackage.ID"].ToArray()[0]))
+                });
+            }
             setDone(true);
 
-            return RedirectToAction("Create");
+            return Redirect(Request.Headers["Referer"]);
         }
         [HttpPost, ActionName("DeleteOfferItem")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteOfferItem(int ide)
         {
-
-            offerItems.RemoveAt(ide);
+            if (Request.Headers["Referer"].ToString().Contains("Create"))
+                offerItemsCreate.RemoveAt(ide);
+            else if (Request.Headers["Referer"].ToString().Contains("Edit"))
+                offerItemsEdit.RemoveAt(ide);
 
             return Redirect(Request.Headers["Referer"]);
 
