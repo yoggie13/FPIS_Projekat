@@ -29,23 +29,16 @@ namespace FPIS_Projekat.Controllers
                 .Include(d => d._Manufacturer)
                 .ToListAsync();
         }
-
-        // GET: api/Devices/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Device>> GetDevice(int id)
+        [HttpPost("{searchTerm}")]
+        public async Task<ActionResult<IEnumerable<Device>>> SearchDevices(string searchTerm)
         {
-            var device = _context.Devices
+            return await _context.Devices
                 .Include(d => d._Manufacturer)
-                .Where(d => d.ID == id)
-                .FirstOrDefault();
-
-            if (device == null)
-            {
-                return NotFound();
-            }
-
-            return device;
+                .Where(d => d.Name.Contains(searchTerm) || d._Manufacturer.Name.Contains(searchTerm))
+                .ToListAsync();
         }
+
+ 
 
         // PUT: api/Devices/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
