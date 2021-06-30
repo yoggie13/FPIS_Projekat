@@ -22,5 +22,6 @@ namespace FPIS_Projekat
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
     }
 }

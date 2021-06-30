@@ -31,6 +31,9 @@ namespace FPIS_Projekat
             var connection = "Server = (localdb)\\MSSQLLocalDB; Database = DatabaseFPIS; Trusted_Connection = True; " +
                 "MultipleActiveResultSets = true";
             services.AddDbContext<ISContext>(options => options.UseSqlServer(connection));
+            services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +61,7 @@ namespace FPIS_Projekat
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Offers}/{action=Index}/{id?}");
-               
+
 
             });
 
