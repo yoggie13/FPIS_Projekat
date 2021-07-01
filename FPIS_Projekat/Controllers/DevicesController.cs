@@ -29,6 +29,13 @@ namespace FPIS_Projekat.Controllers
                 .Include(d => d._Manufacturer)
                 .ToListAsync();
         }
+        // GET: api/Devices/Manufacturers
+        [HttpGet("Manufacturers")]
+        public async Task<ActionResult<IEnumerable<Manufacturer>>> GetManufacturers()
+        {
+            return await _context.Manufacturers
+                .ToListAsync();
+        }
         [HttpPost("{searchTerm}")]
         public async Task<ActionResult<IEnumerable<Device>>> SearchDevices(string searchTerm)
         {
