@@ -9,25 +9,26 @@ $("#searchBar").submit(function (event) {
     }
 
     $.ajax({
-
         url: "http://localhost:11807/api/Devices/" + searchTerm,
         type: "POST",
         success: function (data) {
+            console.log(data);
+
             data.forEach(element => {
                 var div = document.createElement("div");
-                div.id = element["name"];
+                div.id = element["Name"];
                 div.className = "results";
 
                 var h2 = document.createElement('h2');
-                h2.innerHTML = element['name'];
+                h2.innerHTML = element['Name'];
 
                 var color = document.createElement('p');
                 color.id = "color";
-                color.innerHTML = element['color'];
+                color.innerHTML = element['Color'];
 
                 var price = document.createElement('p');
                 price.id = 'price';
-                price.innerHTML = element['price'];
+                price.innerHTML = element['Price'];
 
                 div.append(h2);
                 div.append(price);

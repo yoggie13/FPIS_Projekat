@@ -41,61 +41,29 @@ namespace FPIS_Projekat.Controllers
         }
         [HttpPost("{searchTerm}")]
         public object SearchDevices(string searchTerm)
-        { 
+        {
             List<Device> devices = _context.Devices
                 .Include(d => d._Manufacturer)
                 .Where(d => d.Name.Contains(searchTerm) || d._Manufacturer.Name.Contains(searchTerm))
                 .ToList();
-            return null;
-
-            //var x= (JsonConvert.SerializeObject(devices).ToList(), Formatting.Indented,
-            //     new JsonSerializerSettings()
-            //     {
-            //         ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            //     });
-        
-            //return new JObject(
-            //    new JProperty("Devices", new JObject(JsonConvert.SerializeObject(devices).ToList(), Formatting.Indented,
-            //     new JsonSerializerSettings()
-            //     {
-            //         ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            //     })),
-            //    new JProperty("Picture", getPictures(devices))
-            //    );
-        }
-
-        private object getPictures(List<Device> devices)
-        {
-            List<JObject> pictures = new List<JObject>();
-
-            var client = new HttpClient();
-
-            client.BaseAddress = new Uri("https://daisycon.io/");
-            foreach(Device d in devices)
+            List<JObject> jsons = new List<JObject>();
+            foreach (Device d in devices)
             {
-                var responseTask = client.GetAsync("mages/mobile-device/?width=250&height=250&color=ffffff&" +
-                    "mobile_device_brand=" + d._Manufacturer.Name.Replace(' ','+') +
-                    "&mobile_device_model=" + d.Name.Replace(' ', '+'));
 
-                responseTask.Wait();
-                var result = responseTask.Result;
-
-                if (result.IsSuccessStatusCode)
-                {
-
-                    var readTask = result.Content.ReadAsStringAsync();
-                    readTask.Wait();
-
-                    var picture = readTask.Result;
-
-                    pictures.Add(JObject.Parse(picture));
-                }
-                else pictures.Add(JObject.Parse(""));
+                jsons.Add(new JObject(
+                     new JProperty("Name", d.Name),
+                     new JProperty("Price", d.Price),
+                     new JProperty("Color", d.Color),
+                     new JProperty("Manufacturer", d._Manufacturer.Name),
+                     new JProperty("Picture", "https://daisycon.io/" +
+                                    "images/mobile-device/?width=250&height=250&color=ffffff&" +
+                                 "mobile_device_brand=" + d._Manufacturer.Name.Replace(' ', '+') +
+                                    "&mobile_device_model=" + d.Name.Replace(' ', '+'))
+                     ));
             }
-
-            return pictures;
-
+            return jsons;
         }
+
 
         // PUT: api/Devices/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
