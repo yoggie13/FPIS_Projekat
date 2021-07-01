@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace FPIS_Projekat.Models
@@ -19,6 +20,8 @@ namespace FPIS_Projekat.Models
         
         [Required]
         public Manufacturer _Manufacturer { get; set; }
+        [JsonIgnore]
+
         public List<OfferItem> Offers { get; set; }
 
         public override string ToString()

@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FPIS_Projekat.Data;
 using FPIS_Projekat.Models;
+using Newtonsoft.Json.Linq;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace FPIS_Projekat.Controllers
 {
@@ -37,15 +40,62 @@ namespace FPIS_Projekat.Controllers
                 .ToListAsync();
         }
         [HttpPost("{searchTerm}")]
-        public async Task<ActionResult<IEnumerable<Device>>> SearchDevices(string searchTerm)
-        {
-            return await _context.Devices
+        public object SearchDevices(string searchTerm)
+        { 
+            List<Device> devices = _context.Devices
                 .Include(d => d._Manufacturer)
                 .Where(d => d.Name.Contains(searchTerm) || d._Manufacturer.Name.Contains(searchTerm))
-                .ToListAsync();
+                .ToList();
+            return null;
+
+            //var x= (JsonConvert.SerializeObject(devices).ToList(), Formatting.Indented,
+            //     new JsonSerializerSettings()
+            //     {
+            //         ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            //     });
+        
+            //return new JObject(
+            //    new JProperty("Devices", new JObject(JsonConvert.SerializeObject(devices).ToList(), Formatting.Indented,
+            //     new JsonSerializerSettings()
+            //     {
+            //         ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            //     })),
+            //    new JProperty("Picture", getPictures(devices))
+            //    );
         }
 
- 
+        private object getPictures(List<Device> devices)
+        {
+            List<JObject> pictures = new List<JObject>();
+
+            var client = new HttpClient();
+
+            client.BaseAddress = new Uri("https://daisycon.io/");
+            foreach(Device d in devices)
+            {
+                var responseTask = client.GetAsync("mages/mobile-device/?width=250&height=250&color=ffffff&" +
+                    "mobile_device_brand=" + d._Manufacturer.Name.Replace(' ','+') +
+                    "&mobile_device_model=" + d.Name.Replace(' ', '+'));
+
+                responseTask.Wait();
+                var result = responseTask.Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+
+                    var readTask = result.Content.ReadAsStringAsync();
+                    readTask.Wait();
+
+                    var picture = readTask.Result;
+
+                    pictures.Add(JObject.Parse(picture));
+                }
+                else pictures.Add(JObject.Parse(""));
+            }
+
+            return pictures;
+
+        }
 
         // PUT: api/Devices/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
