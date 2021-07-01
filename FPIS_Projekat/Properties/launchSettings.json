@@ -4,20 +4,23 @@
     "anonymousAuthentication": true,
     "iisExpress": {
       "applicationUrl": "http://localhost:11807/",
-      "sslPort": 44316
+      "sslPort": 0
     }
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "Offers",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "jsWebView2Debugging": false
     },
     "FPIS_Projekat": {
-      "commandName": "Project",
+      "commandName": "IISExpress",
       "launchBrowser": true,
+      "launchUrl": "/Offers",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

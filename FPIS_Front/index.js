@@ -1,7 +1,6 @@
 $("#searchBar").submit(function (event) {
     event.preventDefault();
 
-    debugger;
 
     var searchTerm = $('#searchTerm').val();
     if (searchTerm === null || searchTerm === "" || searchTerm === " ") {
@@ -11,7 +10,7 @@ $("#searchBar").submit(function (event) {
 
     $.ajax({
 
-        url: "https://localhost:5001/api/Devices/" + searchTerm,
+        url: "http://localhost:11807/api/Devices/" + searchTerm,
         type: "POST",
         success: function (data) {
             console.log(data);
