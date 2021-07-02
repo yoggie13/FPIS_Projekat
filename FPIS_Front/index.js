@@ -9,6 +9,7 @@ $("#searchBar").submit(function (event) {
     }
 
     $.ajax({
+
         url: "http://localhost:11807/api/Devices/" + searchTerm,
         type: "POST",
         success: function (data) {
