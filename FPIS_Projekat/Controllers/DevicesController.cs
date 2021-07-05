@@ -32,6 +32,15 @@ namespace FPIS_Projekat.Controllers
                 .Include(d => d._Manufacturer)
                 .ToListAsync();
         }
+        // GET: api/Devices
+        [HttpGet("{id}")]
+        public object GetDevice(int id)
+        {
+            return  _context.Devices
+                .Where(d => d.ID == id)
+                .Include(d => d._Manufacturer)
+                .FirstOrDefault();
+        }
         // GET: api/Devices/Manufacturers
         [HttpGet("Manufacturers")]
         public async Task<ActionResult<IEnumerable<Manufacturer>>> GetManufacturers()
@@ -51,6 +60,7 @@ namespace FPIS_Projekat.Controllers
             {
 
                 jsons.Add(new JObject(
+                    new JProperty("ID", d.ID),
                      new JProperty("Name", d.Name),
                      new JProperty("Price", d.Price),
                      new JProperty("Color", d.Color),
