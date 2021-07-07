@@ -1,0 +1,29 @@
+﻿@model FPIS_Projekat.Models.OfferItem
+
+<h4>OfferItem</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form id="createOfferItem" asp-action="CreateOfferItem">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <span id="items">
+                <label asp-for="_Device.Name" class="control-label"></label>
+                <select asp-for="_Device.ID" class="form-control" asp-items="@(new SelectList(ViewBag.Devices, "ID", "Name"))"></select>
+
+                <label asp-for="_TariffPackage.Name" class="control-label"></label>
+                <select asp-for="_TariffPackage.ID" class="form-control" asp-items="@(new SelectList(ViewBag.Packages, "ID", "Name"))"></select>
+            </span>
+            <div class="form-group">
+                <input type="submit" id="addItemBtn" value="Dodaj stavku" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

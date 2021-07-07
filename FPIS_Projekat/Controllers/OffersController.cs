@@ -282,6 +282,11 @@ namespace FPIS_Projekat.Controllers
         {
             return _context.Offers.Any(e => e.ID == id);
         }
+        //[HttpGet, ActionName("CreateOfferItem")]
+        //public async Task<ActionResult> CreateOfferItem()
+        //{
+        //    return PartialView(new OfferItem());
+        //}
 
         [HttpPost, ActionName("CreateOfferItem")]
         [ValidateAntiForgeryToken]
@@ -292,10 +297,10 @@ namespace FPIS_Projekat.Controllers
                 offerItemsCreate.Add(new OfferItem()
                 {
                     _Device = _context.Devices
-                            .Find(Convert.ToInt32(this.Request.Form["OfferItems[0]._Device.ID"].ToArray()[0])),
+                            .Find(Convert.ToInt32(this.Request.Form["_Device.ID"].ToArray()[0])),
 
                     _TariffPackage = _context.TariffPackages
-                            .Find(Convert.ToInt32(this.Request.Form["OfferItems[0]._TariffPackage.ID"].ToArray()[0]))
+                            .Find(Convert.ToInt32(this.Request.Form["_TariffPackage.ID"].ToArray()[0]))
                 });
             }
             else if (Request.Headers["Referer"].ToString().Contains("Edit"))
@@ -303,10 +308,10 @@ namespace FPIS_Projekat.Controllers
                 offerItemsEdit.Add(new OfferItem()
                 {
                     _Device = _context.Devices
-                                       .Find(Convert.ToInt32(this.Request.Form["OfferItems[0]._Device.ID"].ToArray()[0])),
+                                       .Find(Convert.ToInt32(this.Request.Form["_Device.ID"].ToArray()[0])),
 
                     _TariffPackage = _context.TariffPackages
-                                       .Find(Convert.ToInt32(this.Request.Form["OfferItems[0]._TariffPackage.ID"].ToArray()[0]))
+                                       .Find(Convert.ToInt32(this.Request.Form["_TariffPackage.ID"].ToArray()[0]))
                 });
             }
             setDone(true);
@@ -321,7 +326,7 @@ namespace FPIS_Projekat.Controllers
                 offerItemsCreate.RemoveAt(ide);
             else if (Request.Headers["Referer"].ToString().Contains("Edit"))
                 offerItemsEdit.RemoveAt(ide);
-
+            
             return Redirect(Request.Headers["Referer"]);
 
         }

@@ -67,6 +67,11 @@
 </div>
 <dialog id="modal" class="modal">
     <div class="modal-content">
+        @Html.Partial("CreateOfferItem.cshtml", new OfferItem())
+    </div>
+</dialog>
+@*<dialog id="modal" class="modal">
+    <div class="modal-content">
         <h4>OfferItem</h4>
         <hr />
         <div class="row">
@@ -86,7 +91,7 @@
             </div>
         </div>
     </div>
-</dialog>
+</dialog>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
