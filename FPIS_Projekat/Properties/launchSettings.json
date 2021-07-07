@@ -10,7 +10,8 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchUrl": "Offers",
+      "launchBrowser": true,
+      "launchUrl": "Offers/Create",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

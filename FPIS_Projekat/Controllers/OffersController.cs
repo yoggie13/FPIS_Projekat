@@ -41,7 +41,6 @@ namespace FPIS_Projekat.Controllers
         // GET: Offers/Create
         public IActionResult Create()
         {
-
             ViewBag.Employees = new List<Employee>(
                 _context.Employees
                 .Select(e => new Employee()
@@ -97,8 +96,6 @@ namespace FPIS_Projekat.Controllers
         //POST: Offers/Search
         public async Task<IActionResult> Search([Bind("Date")] Offer offer)
         {
-
-
             ViewBag.Offers = _context.Offers
                 .Where(o => o.Date == offer.Date.Date)
                 .Include(o => o._Employee)

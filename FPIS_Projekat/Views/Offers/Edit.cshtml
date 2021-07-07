@@ -1,12 +1,11 @@
 ﻿@model FPIS_Projekat.Models.Offer
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Izmeni ponudu";
 }
 
-<h1>Edit</h1>
+<h1>Izmeni ponudu</h1>
 
-<h4>Offer</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -22,7 +21,7 @@
 
                 <label asp-for="Date" class="control-label">Datum</label>
                 <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+                @*<span asp-validation-for="Date" class="text-danger"></span>*@
                 <button id="openModal" class="btn btn-outline-secondary">Dodaj stavku ponude</button>
                 <div id="tableOfItems">
                     <table class="table">

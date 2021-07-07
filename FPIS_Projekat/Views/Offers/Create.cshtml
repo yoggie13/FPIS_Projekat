@@ -1,12 +1,11 @@
 ﻿@model FPIS_Projekat.Models.Offer
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Kreiraj ponudu";
 }
 
-<h1>Create</h1>
+<h1>Kreiraj ponudu</h1>
 
-<h4>Offer</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -21,7 +20,7 @@
                 <select asp-for="_Client.Name" class="form-control" asp-items="@(new SelectList(ViewBag.Clients, "ID", "Name"))"></select>
 
                 <label asp-for="Date" class="control-label">Datum</label>
-                <input asp-for="Date" class="form-control" />
+                <input asp-for="Date" class="form-control"/>
                 <span asp-validation-for="Date" class="text-danger"></span>
                 <button id="openModal" class="btn btn-outline-secondary">Dodaj stavku ponude</button>
                 <div id="tableOfItems">
@@ -57,8 +56,8 @@
             <div class="form-group">
                 <input type="submit" id="createOrder" value="Create" class="btn btn-primary" />
             </div>
+            <p id="errorMessage">@ViewBag.ErrorMessage</p>
         </form>
-
     </div>
 </div>
 

@@ -5,7 +5,7 @@
 var token = $("[name='__RequestVerificationToken']").val();
 
 window.onload = function () {
-    
+
     if (window.location.href.indexOf("Create") > -1) {
         if (localStorage.getItem("employee") !== null) {
             document.getElementById("zEmployee_Name").options.selectedIndex = localStorage.getItem("employee");
@@ -18,9 +18,14 @@ window.onload = function () {
 $("#openModal").click(function (event) {
     event.preventDefault();
 
-    //localStorage.setItem("employee", document.getElementById("zEmployee_Name").selectedIndex);
-    //localStorage.setItem("client", document.getElementById("zClient_Name").selectedIndex);
-    //localStorage.setItem("date", document.getElementById("Date").value);
+    if (window.location.href.indexOf("Create") > -1) {
+
+        localStorage.setItem("employee", document.getElementById("zEmployee_Name").selectedIndex);
+        localStorage.setItem("client", document.getElementById("zClient_Name").selectedIndex);
+        localStorage.setItem("date", document.getElementById("Date").value);
+
+    }
+
 
     $("#modal").show();
 });
