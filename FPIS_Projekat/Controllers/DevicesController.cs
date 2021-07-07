@@ -64,7 +64,9 @@ namespace FPIS_Projekat.Controllers
                      new JProperty("Name", d.Name),
                      new JProperty("Price", d.Price),
                      new JProperty("Color", d.Color),
-                     new JProperty("Manufacturer", d._Manufacturer.Name),
+                     new JProperty("Manufacturer", new JObject(
+                        new JProperty("Manufacturer_ID", d._Manufacturer.ID),
+                        new JProperty("Manufacturer_Name",d._Manufacturer.Name))),
                      new JProperty("Picture", "https://daisycon.io/" +
                                     "images/mobile-device/?width=250&height=250&color=ffffff&" +
                                  "mobile_device_brand=" + d._Manufacturer.Name.Replace(' ', '+') +
@@ -84,6 +86,10 @@ namespace FPIS_Projekat.Controllers
             {
                 return BadRequest();
             }
+            device.Model = _context.Devices
+                    .AsNoTracking()
+                   .FirstOrDefault(d => d.ID == id)
+                   .Model;
 
             device._Manufacturer = _context.Manufacturers.Find(device._Manufacturer.ID);
             _context.Entry(device).State = EntityState.Modified;
