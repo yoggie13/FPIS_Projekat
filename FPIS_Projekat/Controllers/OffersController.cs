@@ -21,6 +21,7 @@ namespace FPIS_Projekat.Controllers
         private readonly ISContext _context;
         public static List<OfferItem> offerItemsCreate = new List<OfferItem>();
         public static List<OfferItem> offerItemsEdit = new List<OfferItem>();
+        public static bool listIsBeingEdited = false;
 
 
         private static bool done;
@@ -41,6 +42,8 @@ namespace FPIS_Projekat.Controllers
         // GET: Offers/Create
         public IActionResult Create()
         {
+            listIsBeingEdited = false;
+
             ViewBag.Employees = new List<Employee>(
                 _context.Employees
                 .Select(e => new Employee()
@@ -96,6 +99,8 @@ namespace FPIS_Projekat.Controllers
         //POST: Offers/Search
         public async Task<IActionResult> Search([Bind("Date")] Offer offer)
         {
+            listIsBeingEdited = false;
+
             ViewBag.Offers = _context.Offers
                 .Where(o => o.Date == offer.Date.Date)
                 .Include(o => o._Employee)
@@ -112,6 +117,8 @@ namespace FPIS_Projekat.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Date")] Offer offer)
         {
+            listIsBeingEdited = false;
+
 
             offer._Employee = _context.Employees
                 .Find(Convert.ToInt32(this.Request.Form["_Employee.Name"].ToArray()[0]));
@@ -140,6 +147,7 @@ namespace FPIS_Projekat.Controllers
         // GET: Offers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
@@ -184,6 +192,7 @@ namespace FPIS_Projekat.Controllers
 
 
             var offer = await _context.Offers
+                     .AsNoTracking()
                      .Include(o => o._Employee)
                      .Include(o => o._Client)
                      .Include(o => o.OfferItems)
@@ -196,7 +205,12 @@ namespace FPIS_Projekat.Controllers
             {
                 return NotFound();
             }
-            offerItemsEdit = offer.OfferItems;
+            if (listIsBeingEdited == false)
+            {
+                offerItemsEdit = offer.OfferItems;
+                listIsBeingEdited = true;
+            }
+
             ViewBag.Items = offerItemsEdit;
 
             return View(offer);
@@ -214,40 +228,55 @@ namespace FPIS_Projekat.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            
+            try
             {
-                try
-                {
-                    _context.OfferItems
-                        .RemoveRange(_context.OfferItems.Where(o => o._Offer.ID == offer.ID));
-                    _context.Update(offer);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!OfferExists(offer.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        offerItemsCreate = new List<OfferItem>();
+                var oridjidji = _context
+                    .Offers
+                    .Include(o => o.OfferItems)
+                    .First(o => o.ID == offer.ID);
 
-                        throw;
-                    }
-                }
-                offerItemsCreate = new List<OfferItem>();
+                oridjidji.OfferItems = offerItemsEdit;
 
-                return RedirectToAction(nameof(Index));
+                oridjidji._Employee = _context.Employees
+                    .Where(e => e.ID == Convert.ToInt32(this.Request.Form["_Employee.ID"].ToArray()[0]))
+                    .FirstOrDefault();
+
+                oridjidji._Client = _context.Clients
+                    .Where(c => c.ID == Convert.ToInt32(this.Request.Form["_Client.ID"].ToArray()[0]))
+                    .FirstOrDefault();
+
+                oridjidji.Date = offer.Date;
+
+
+                _context.SaveChanges();
+
             }
-            offerItemsCreate = new List<OfferItem>();
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OfferExists(offer.ID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    offerItemsEdit = new List<OfferItem>();
+                    return View(offer);
+                }
+            }
 
-            return View(offer);
+            offerItemsEdit = new List<OfferItem>();
+            listIsBeingEdited = false;
+
+            return RedirectToAction(nameof(Index));
+
         }
 
         // GET: Offers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            listIsBeingEdited = false;
+
             if (id == null)
             {
                 return NotFound();
@@ -268,6 +297,8 @@ namespace FPIS_Projekat.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            listIsBeingEdited = false;
+
             var offer = await _context.Offers.FindAsync(id);
             _context.Offers.Remove(offer);
             await _context.SaveChangesAsync();
@@ -289,6 +320,7 @@ namespace FPIS_Projekat.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateOfferItem([Bind("ID")] OfferItem offerItem)
         {
+
             if (Request.Headers["Referer"].ToString().Contains("Create"))
             {
                 offerItemsCreate.Add(new OfferItem()
@@ -323,7 +355,7 @@ namespace FPIS_Projekat.Controllers
                 offerItemsCreate.RemoveAt(ide);
             else if (Request.Headers["Referer"].ToString().Contains("Edit"))
                 offerItemsEdit.RemoveAt(ide);
-            
+
             return Redirect(Request.Headers["Referer"]);
 
         }

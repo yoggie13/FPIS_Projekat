@@ -30,7 +30,10 @@ namespace FPIS_Projekat
 
             var connection = "Server = (localdb)\\MSSQLLocalDB; Database = DatabaseFPIS; Trusted_Connection = True; " +
                 "MultipleActiveResultSets = true";
-            services.AddDbContext<ISContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<ISContext>(options => {
+                options.UseSqlServer(connection);
+                //options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            });
             services.AddControllers().AddNewtonsoftJson(options =>
                          options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddCors(options =>

@@ -11,7 +11,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "Offers/Create",
+      "launchUrl": "Offers/Edit/8",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

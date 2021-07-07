@@ -30,6 +30,7 @@ $("#openModal").click(function (event) {
     $("#modal").show();
 });
 $("#createOrder").click(function (event) {
+
     localStorage.removeItem("employee");
     localStorage.removeItem("client");
     localStorage.removeItem("date");
