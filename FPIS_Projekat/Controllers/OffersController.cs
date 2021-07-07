@@ -233,7 +233,7 @@ namespace FPIS_Projekat.Controllers
             {
                 var oridjidji = _context
                     .Offers
-                    .Include(o => o.OfferItems)
+                    .Include(o => o.OfferItems )
                     .First(o => o.ID == offer.ID);
 
                 oridjidji.OfferItems = offerItemsEdit;
