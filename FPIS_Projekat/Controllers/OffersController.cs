@@ -268,7 +268,7 @@ namespace FPIS_Projekat.Controllers
             offerItemsEdit = new List<OfferItem>();
             listIsBeingEdited = false;
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Edit", new { id = offer.ID });
 
         }
 
