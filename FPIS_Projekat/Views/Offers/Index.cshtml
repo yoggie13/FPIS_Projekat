@@ -1,7 +1,7 @@
 ﻿@model FPIS_Projekat.Models.Offer
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Pretraga";
 }
 
 <div>
@@ -10,12 +10,12 @@
         <label asp-for="Date" class="control-label">Datum</label>
         <input asp-for="Date" class="form-control" />
         <span asp-validation-for="Date" class="text-danger"></span>
-        <input type="submit" value="Search" class="btn btn-primary" />
+        <input type="submit" value="Pretraži" class="btn btn-primary" />
     </form>
 </div>
 <div>
     <p>
-        <a asp-action="Create">Create New</a>
+        <a asp-action="Create">Kreiraj novu ponudu</a>
     </p>
 </div>
 

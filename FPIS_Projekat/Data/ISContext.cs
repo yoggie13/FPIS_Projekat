@@ -30,6 +30,7 @@ namespace FPIS_Projekat.Data
         public DbSet<OfferItem> OfferItems { get; set; }
         public DbSet<PackageType> PackageTypes { get; set; }
         public DbSet<TariffPackage> TariffPackages { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -156,3 +156,4 @@ C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\bin\Debug\netcore
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\bin\Debug\netcoreapp5.0\System.Web.Http.dll
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\bin\Debug\netcoreapp5.0\System.Web.Http.Cors.dll
 C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\Offers\CreateOfferItem.cshtml.g.cs
+C:\Users\Ognjen\Documents\FON\FPIS\FPIS_Projekat\FPIS_Projekat\obj\Debug\netcoreapp5.0\Razor\Views\Offers\Login.cshtml.g.cs

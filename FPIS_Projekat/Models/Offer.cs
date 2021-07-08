@@ -17,6 +17,7 @@ namespace FPIS_Projekat.Models
         public Client _Client { get; set; }
 
         //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [Display(Name = "Datum")]
         public DateTime Date { get; set; }
         public List<OfferItem> OfferItems { get; set; }
 

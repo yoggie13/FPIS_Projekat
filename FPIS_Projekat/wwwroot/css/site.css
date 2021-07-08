@@ -1,76 +1,98 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+ details on configuring this project to bundle and minify static web assets. */
+/*
+body {
+    background-image: url("logo.png");
+    background-position: left;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 22vw;
+    overflow-x: hidden;
+}*/
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
+
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #6295ac;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #da291c;
+    border-color: #da291c;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.btn-outline-secondary {
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
 
-dialog{
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+dialog {
     top: 50px !important;
     width: 50% !important;
     height: 50% !important;
@@ -79,13 +101,42 @@ dialog{
     border: 1px solid rgb(171 169 169 / 0.80) !important;
     border-radius: 20px !important;
 }
-.modal-content{
-    border: none;
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    margin:0;
+    padding: 0;
+    place-content: space-between;
+    padding-bottom:5px;
 }
-@keyframes slideIn{
-    from{
+#x{
+    margin-right: 30px;
+}
+#x:hover{
+    cursor:pointer;
+}
+select {
+    cursor: pointer;
+}
+#header-logo{
+    height:50px;
+    width:auto;
+}
+#Date {
+    cursor: pointer;
+}
+.modal-content {
+    border: none;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+@keyframes slideIn {
+    from {
         top: -100px !important;
     }
+
     to {
         top: 50px !important;
     }

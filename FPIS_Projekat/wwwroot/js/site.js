@@ -35,3 +35,8 @@ $("#createOrder").click(function (event) {
     localStorage.removeItem("client");
     localStorage.removeItem("date");
 });
+
+$("#x").click(function (event) {
+    event.preventDefault();
+    $("#modal").hide();
+});

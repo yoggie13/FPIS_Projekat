@@ -22,6 +22,7 @@ namespace FPIS_Projekat.Controllers
         public static List<OfferItem> offerItemsCreate = new List<OfferItem>();
         public static List<OfferItem> offerItemsEdit = new List<OfferItem>();
         public static bool listIsBeingEdited = false;
+        //private User loggedInUser;
 
 
         private static bool done;
@@ -35,9 +36,37 @@ namespace FPIS_Projekat.Controllers
         // GET: Offers
         public async Task<IActionResult> Index()
         {
-            return View();
+            //if (loggedInUser == null)
+            //    return RedirectToAction("Login");
+            //else
+                return View();
         }
 
+        [HttpGet, ActionName("Login")]
+        public async Task<IActionResult> Login()
+        {
+            //if(loggedInUser != null)
+            //{
+                return RedirectToAction(nameof(Index));
+            //}
+            //return View("Login");
+        }
+        //[HttpPost, ActionName("User")]
+        //public async Task<IActionResult> UserLogin(User user){
+
+        //    User userDb = _context.Users
+        //        .Where(u => u.Username == user.Username)
+        //        .FirstOrDefault();
+
+        //    if (userDb == null || userDb.Password != user.Password)
+        //    {
+        //        return RedirectToAction("Login");
+        //    }
+
+        //    loggedInUser = userDb;
+        //    return RedirectToAction(nameof(Index));
+
+        //}
 
         // GET: Offers/Create
         public IActionResult Create()
@@ -119,7 +148,6 @@ namespace FPIS_Projekat.Controllers
         {
             listIsBeingEdited = false;
 
-
             offer._Employee = _context.Employees
                 .Find(Convert.ToInt32(this.Request.Form["_Employee.Name"].ToArray()[0]));
 
@@ -134,9 +162,9 @@ namespace FPIS_Projekat.Controllers
             }
             offer.OfferItems = offerItemsCreate;
 
-            var query = _context.Add(offer);
+            _context.Add(offer);
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             offerItemsCreate = new List<OfferItem>();
 
@@ -228,7 +256,6 @@ namespace FPIS_Projekat.Controllers
                 return NotFound();
             }
 
-            
             try
             {
                 var oridjidji = _context
@@ -247,7 +274,6 @@ namespace FPIS_Projekat.Controllers
                     .FirstOrDefault();
 
                 oridjidji.Date = offer.Date;
-
 
                 _context.SaveChanges();
 
