@@ -175,7 +175,7 @@ namespace FPIS_Projekat.Controllers
         // GET: Offers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-
+            _context.ChangeTracker.Clear();
             if (id == null)
             {
                 return NotFound();
@@ -251,6 +251,8 @@ namespace FPIS_Projekat.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Date")] Offer offer)
         {
+            _context.ChangeTracker.Clear();
+
             if (id != offer.ID)
             {
                 return NotFound();
@@ -270,6 +272,7 @@ namespace FPIS_Projekat.Controllers
                     .FirstOrDefault();
 
                 oridjidji._Client = _context.Clients
+                    .AsNoTracking()
                     .Where(c => c.ID == Convert.ToInt32(this.Request.Form["_Client.ID"].ToArray()[0]))
                     .FirstOrDefault();
 
