@@ -175,7 +175,7 @@ namespace FPIS_Projekat.Controllers
         // GET: Offers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            _context.ChangeTracker.Clear();
+            //_context.ChangeTracker.Clear();
             if (id == null)
             {
                 return NotFound();
@@ -225,6 +225,7 @@ namespace FPIS_Projekat.Controllers
                      .Include(o => o._Client)
                      .Include(o => o.OfferItems)
                         .ThenInclude(of => of._Device)
+                        .ThenInclude(d => d._Manufacturer)
                      .Include(o => o.OfferItems)
                        .ThenInclude(of => of._TariffPackage)
                      .FirstOrDefaultAsync(m => m.ID == id);
@@ -251,35 +252,52 @@ namespace FPIS_Projekat.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Date")] Offer offer)
         {
-            _context.ChangeTracker.Clear();
+            //_context.ChangeTracker.Clear();
 
             if (id != offer.ID)
             {
                 return NotFound();
             }
 
+            Offer original = _context.Offers
+                .Where(o => o.ID == id)
+                .Include(o => o.OfferItems)
+                .SingleOrDefault();
+
+
+            original._Client = _context.Clients
+                .Find(Convert.ToInt32(this.Request.Form["_Client.ID"].ToArray()[0]));
+
+            original._Employee = _context.Employees
+                .Find(Convert.ToInt32(this.Request.Form["_Employee.ID"].ToArray()[0]));
+
+            original.Date = offer.Date.Date;
             try
             {
-                var oridjidji = _context
-                    .Offers
-                    .Include(o => o.OfferItems)
-                    .First(o => o.ID == offer.ID);
 
-                oridjidji.OfferItems = offerItemsEdit;
+                foreach(OfferItem of in original.OfferItems)
+                {
+                    _context.OfferItems.Remove(of);
+                }
+                foreach(OfferItem of in offerItemsEdit)
+                {
+                    of._Offer = original;
 
-                oridjidji._Employee = _context.Employees
-                    .Where(e => e.ID == Convert.ToInt32(this.Request.Form["_Employee.ID"].ToArray()[0]))
-                    .FirstOrDefault();
+                    of._Device = _context.Devices
+                        .Where(d => d.ID == of._Device.ID)
+                        .FirstOrDefault();
 
-                oridjidji._Client = _context.Clients
-                    .AsNoTracking()
-                    .Where(c => c.ID == Convert.ToInt32(this.Request.Form["_Client.ID"].ToArray()[0]))
-                    .FirstOrDefault();
+                    of._TariffPackage = _context.TariffPackages
+                        .Where(t => t.ID == of._TariffPackage.ID)
+                        .FirstOrDefault();
 
-                oridjidji.Date = offer.Date;
+                    _context.OfferItems.Add(of);
+                }
+                _context.Offers.Update(original);
 
                 _context.SaveChanges();
 
+                _context.ChangeTracker.Clear();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -297,7 +315,7 @@ namespace FPIS_Projekat.Controllers
             offerItemsEdit = new List<OfferItem>();
             listIsBeingEdited = false;
 
-            return RedirectToAction("Edit", new { id = offer.ID });
+            return RedirectToAction("Edit", new { id = original.ID });
 
         }
 
